@@ -15,9 +15,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class CrateOnTheGo implements Listener {
-    
+
     private static CrazyCrates cc = CrazyCrates.getInstance();
-    
+
     @EventHandler
     public void onCrateOpen(PlayerInteractEvent e) {
         Player player = e.getPlayer();
@@ -41,5 +41,5 @@ public class CrateOnTheGo implements Listener {
             }
         }
     }
-    
+
 }

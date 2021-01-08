@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CSGO implements Listener {
-    
+
     private static CrazyCrates cc = CrazyCrates.getInstance();
-    
+
     private static void setGlass(Inventory inv) {
         HashMap<Integer, ItemStack> glass = new HashMap<>();
         for (int i = 0; i < 10; i++) {
@@ -60,13 +60,14 @@ public class CSGO implements Listener {
         inv.setItem(8, item);
         inv.setItem(8 + 18, item);
     }
-    
+
     public static void openCSGO(Player player, Crate crate, KeyType keyType, boolean checkHand) {
         Inventory inv = Bukkit.createInventory(null, 27, Methods.sanitizeColor(crate.getFile().getString("Crate.CrateName")));
         setGlass(inv);
         for (int i = 9; i > 8 && i < 18; i++) {
             inv.setItem(i, crate.pickPrize(player).getDisplayItem());
         }
+
         player.openInventory(inv);
         if (cc.takeKeys(1, player, crate, keyType, checkHand)) {
             startCSGO(player, inv, crate);
@@ -75,13 +76,15 @@ public class CSGO implements Listener {
             cc.removePlayerFromOpeningList(player);
         }
     }
-    
+
     private static void startCSGO(final Player player, final Inventory inv, Crate crate) {
         cc.addCrateTask(player, new BukkitRunnable() {
-            int time = 1;
-            int full = 0;
-            int open = 0;
-            
+            // Start SpaceDelta
+            int time = crate.isSkipAnimation() ? 59 : 1;
+            int full = crate.isSkipAnimation() ? 52 : 0;
+            int open = crate.isSkipAnimation() ? 5 : 0;
+            // End SpaceDelta
+
             @Override
             public void run() {
                 if (full <= 50) {//When Spinning
@@ -94,6 +97,7 @@ public class CSGO implements Listener {
                     player.openInventory(inv);
                     open = 0;
                 }
+
                 full++;
                 if (full > 51) {
                     if (slowSpin().contains(time)) {//When Slowing Down
@@ -101,6 +105,7 @@ public class CSGO implements Listener {
                         setGlass(inv);
                         player.playSound(player.getLocation(), cc.getSound("UI_BUTTON_CLICK", "CLICK"), 1, 1);
                     }
+
                     time++;
                     if (time == 60) {// When done
                         player.playSound(player.getLocation(), cc.getSound("ENTITY_PLAYER_LEVELUP", "LEVEL_UP"), 1, 1);
@@ -131,9 +136,9 @@ public class CSGO implements Listener {
                 }
             }
         }.runTaskTimer(cc.getPlugin(), 1, 1));
-        
+
     }
-    
+
     private static ArrayList<Integer> slowSpin() {
         ArrayList<Integer> slow = new ArrayList<>();
         int full = 120;
@@ -147,7 +152,7 @@ public class CSGO implements Listener {
         }
         return slow;
     }
-    
+
     private static void moveItems(Inventory inv, Player player, Crate crate) {
         ArrayList<ItemStack> items = new ArrayList<>();
         for (int i = 9; i > 8 && i < 17; i++) {
@@ -158,5 +163,5 @@ public class CSGO implements Listener {
             inv.setItem(i + 10, items.get(i));
         }
     }
-    
+
 }

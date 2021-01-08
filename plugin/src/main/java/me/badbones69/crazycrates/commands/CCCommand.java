@@ -33,10 +33,10 @@ import java.io.File;
 import java.util.HashMap;
 
 public class CCCommand implements CommandExecutor {
-    
+
     private FileManager fileManager = FileManager.getInstance();
     private CrazyCrates cc = CrazyCrates.getInstance();
-    
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLable, String[] args) {
         if (args.length == 0) {
@@ -84,9 +84,9 @@ public class CCCommand implements CommandExecutor {
                     return true;
                 }
                 if (cc.getSchematicLocations().containsKey(player.getUniqueId())) {
-                    cc.getSchematicLocations().put(player.getUniqueId(), new Location[] {set == 1 ? block.getLocation() : cc.getSchematicLocations().getOrDefault(player.getUniqueId(), null)[0], set == 2 ? block.getLocation() : cc.getSchematicLocations().getOrDefault(player.getUniqueId(), null)[1]});
+                    cc.getSchematicLocations().put(player.getUniqueId(), new Location[]{set == 1 ? block.getLocation() : cc.getSchematicLocations().getOrDefault(player.getUniqueId(), null)[0], set == 2 ? block.getLocation() : cc.getSchematicLocations().getOrDefault(player.getUniqueId(), null)[1]});
                 } else {
-                    cc.getSchematicLocations().put(player.getUniqueId(), new Location[] {set == 1 ? block.getLocation() : null, set == 2 ? block.getLocation() : null});
+                    cc.getSchematicLocations().put(player.getUniqueId(), new Location[]{set == 1 ? block.getLocation() : null, set == 2 ? block.getLocation() : null});
                 }
                 player.sendMessage(Methods.getPrefix("&7You have set location #" + set + "."));
                 return true;
@@ -159,7 +159,7 @@ public class CCCommand implements CommandExecutor {
                             player.sendMessage(Messages.ADDED_ITEM_WITH_EDITOR.getMessage(placeholders));
                         } else {
                             player.sendMessage(Messages.NOT_A_CRATE.getMessage("%Crate%", args[1]));
-                            
+
                         }
                     } else {
                         player.sendMessage(Messages.NO_ITEM_IN_HAND.getMessage());
@@ -746,5 +746,5 @@ public class CCCommand implements CommandExecutor {
         sender.sendMessage(Methods.color(Methods.getPrefix() + "&cPlease do /cc help for more info."));
         return true;
     }
-    
+
 }

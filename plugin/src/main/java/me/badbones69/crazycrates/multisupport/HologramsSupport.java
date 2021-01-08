@@ -14,10 +14,10 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class HologramsSupport implements HologramController {
-    
+
     private static HashMap<Block, Hologram> holograms = new HashMap<>();
     private static HologramManager hologramManager = JavaPlugin.getPlugin(HologramPlugin.class).getHologramManager();
-    
+
     public void createHologram(Block block, Crate crate) {
         CrateHologram crateHologram = crate.getHologram();
         if (crateHologram.isEnabled()) {
@@ -31,7 +31,7 @@ public class HologramsSupport implements HologramController {
             holograms.put(block, hologram);
         }
     }
-    
+
     public void removeHologram(Block block) {
         if (holograms.containsKey(block)) {
             Hologram hologram = holograms.get(block);
@@ -40,7 +40,7 @@ public class HologramsSupport implements HologramController {
             holograms.remove(block);
         }
     }
-    
+
     public void removeAllHolograms() {
         for (Block location : holograms.keySet()) {
             Hologram hologram = holograms.get(location);
@@ -48,5 +48,5 @@ public class HologramsSupport implements HologramController {
         }
         holograms.clear();
     }
-    
+
 }

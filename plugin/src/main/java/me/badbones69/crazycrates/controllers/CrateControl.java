@@ -34,13 +34,22 @@ import org.bukkit.util.Vector;
 import java.util.HashMap;
 
 public class CrateControl implements Listener { //Crate Control
-    
+
     /**
      * A list of crate locations that are in use.
      */
     public static HashMap<Player, Location> inUse = new HashMap<>();
     private CrazyCrates cc = CrazyCrates.getInstance();
-    
+
+    public static void knockBack(Player player, Location location) {
+        Vector vector = player.getLocation().toVector().subtract(location.toVector()).normalize().multiply(1).setY(.1);
+        if (player.isInsideVehicle()) {
+            player.getVehicle().setVelocity(vector);
+            return;
+        }
+        player.setVelocity(vector);
+    }
+
     /**
      * This event controls when a player tries to click in a GUI based crate type. This will stop them from taking items out of their inventories.
      */
@@ -52,7 +61,7 @@ public class CrateControl implements Listener { //Crate Control
             }
         }
     }
-    
+
     //This must run as highest so it doesn't cause other plugins to check
     //the items that were added to the players inventory and replaced the item in the player's hand.
     //This is only an issue with QuickCrate
@@ -175,7 +184,7 @@ public class CrateControl implements Listener { //Crate Control
             }
         }
     }
-    
+
     @EventHandler
     public void onAdminMenuClick(InventoryClickEvent e) {
         Inventory inv = e.getInventory();
@@ -206,7 +215,7 @@ public class CrateControl implements Listener { //Crate Control
             }
         }
     }
-    
+
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
         Player player = e.getPlayer();
@@ -220,14 +229,5 @@ public class CrateControl implements Listener { //Crate Control
             cc.removePlayerFromOpeningList(player);
         }
     }
-    
-    public static void knockBack(Player player, Location location) {
-        Vector vector = player.getLocation().toVector().subtract(location.toVector()).normalize().multiply(1).setY(.1);
-        if (player.isInsideVehicle()) {
-            player.getVehicle().setVelocity(vector);
-            return;
-        }
-        player.setVelocity(vector);
-    }
-    
+
 }

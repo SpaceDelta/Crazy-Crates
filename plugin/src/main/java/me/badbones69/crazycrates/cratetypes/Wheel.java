@@ -19,10 +19,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Wheel implements Listener {
-    
+
     public static Map<Player, HashMap<Integer, ItemStack>> rewards = new HashMap<>();
     private static CrazyCrates cc = CrazyCrates.getInstance();
-    
+
     public static void startWheel(final Player player, Crate crate, KeyType keyType, boolean checkHand) {
         if (!cc.takeKeys(1, player, crate, keyType, checkHand)) {
             Methods.failedToTakeKey(player, crate);
@@ -50,7 +50,7 @@ public class Wheel implements Listener {
             int slower = 0;
             int open = 0;
             int slow = 0;
-            
+
             @Override
             public void run() {
                 if (i >= 18) {
@@ -126,7 +126,7 @@ public class Wheel implements Listener {
             }
         }.runTaskTimer(cc.getPlugin(), 1, 1));
     }
-    
+
     private static ArrayList<Integer> slowSpin() {
         ArrayList<Integer> slow = new ArrayList<>();
         int full = 46;
@@ -140,7 +140,7 @@ public class Wheel implements Listener {
         }
         return slow;
     }
-    
+
     private static ArrayList<Integer> getBorder() {
         ArrayList<Integer> slots = new ArrayList<>();
         slots.add(13);
@@ -163,5 +163,5 @@ public class Wheel implements Listener {
         slots.add(12);
         return slots;
     }
-    
+
 }

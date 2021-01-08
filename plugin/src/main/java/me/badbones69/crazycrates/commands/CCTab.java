@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CCTab implements TabCompleter {
-    
+
     private CrazyCrates cc = CrazyCrates.getInstance();
-    
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String commandLable, String[] args) {
         List<String> completions = new ArrayList<>();
@@ -109,9 +109,9 @@ public class CCTab implements TabCompleter {
         }
         return new ArrayList<>();
     }
-    
+
     private boolean hasPermission(CommandSender sender, String node) {
         return sender.hasPermission("crazycrates." + node) || sender.hasPermission("crazycrates.admin");
     }
-    
+
 }

@@ -9,9 +9,9 @@ import org.bukkit.plugin.Plugin;
 import java.text.NumberFormat;
 
 public class MVdWPlaceholderAPISupport {
-    
+
     private static CrazyCrates cc = CrazyCrates.getInstance();
-    
+
     public static void registerPlaceholders(Plugin plugin) {
         for (final Crate crate : cc.getCrates()) {
             if (crate.getCrateType() != CrateType.MENU) {
@@ -21,5 +21,5 @@ public class MVdWPlaceholderAPISupport {
             }
         }
     }
-    
+
 }

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class KeyTab implements TabCompleter {
-    
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String commandLable, String[] args) {
         List<String> completions = new ArrayList<>();
@@ -22,9 +22,9 @@ public class KeyTab implements TabCompleter {
         }
         return new ArrayList<>();
     }
-    
+
     private boolean hasPermission(CommandSender sender, String node) {
         return sender.hasPermission("crazycrates." + node) || sender.hasPermission("crazycrates.admin");
     }
-    
+
 }

@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class FireCracker {
-    
+
     private static CrazyCrates cc = CrazyCrates.getInstance();
-    
+
     public static void startFireCracker(final Player player, final Crate crate, KeyType keyType, final Location loc) {
         if (!cc.takeKeys(1, player, crate, keyType, true)) {
             Methods.failedToTakeKey(player, crate);
@@ -41,7 +41,7 @@ public class FireCracker {
             int color = r.nextInt(colors.size());
             int l = 0;
             Location L = loc.clone().add(.5, 25, .5);
-            
+
             @Override
             public void run() {
                 L.subtract(0, 1, 0);
@@ -55,7 +55,7 @@ public class FireCracker {
             }
         }.runTaskTimer(cc.getPlugin(), 0, 2));
     }
-    
+
     private static void fireWork(Location loc, Color color) {
         final Firework fw = (Firework) loc.getWorld().spawnEntity(loc, EntityType.FIREWORK);
         FireworkMeta fm = fw.getFireworkMeta();
@@ -69,5 +69,5 @@ public class FireCracker {
             }
         }.runTaskLaterAsynchronously(cc.getPlugin(), 1);
     }
-    
+
 }

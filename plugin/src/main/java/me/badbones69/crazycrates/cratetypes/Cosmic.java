@@ -29,18 +29,18 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Cosmic implements Listener {
-    
+
     private static CrazyCrates cc = CrazyCrates.getInstance();
     private static HashMap<Player, ArrayList<Integer>> glass = new HashMap<>();
     private static HashMap<Player, ArrayList<Integer>> picks = new HashMap<>();
     private static HashMap<Player, Boolean> checkHands = new HashMap<>();
-    
+
     private static void showRewards(Player player, Crate crate) {
         Inventory inv = Bukkit.createInventory(null, 27, Methods.sanitizeColor(crate.getFile().getString("Crate.CrateName") + " - Prizes"));
         picks.get(player).forEach(i -> inv.setItem(i, pickTier(player).getTierPane()));
         player.openInventory(inv);
     }
-    
+
     private static void startRoll(Player player, Crate crate) {
         Inventory inv = Bukkit.createInventory(null, 27, Methods.sanitizeColor(crate.getFile().getString("Crate.CrateName") + " - Shuffling"));
         for (int i = 0; i < 27; i++) {
@@ -49,7 +49,7 @@ public class Cosmic implements Listener {
         player.playSound(player.getLocation(), cc.getSound("UI_BUTTON_CLICK", "CLICK"), 1, 1);
         player.openInventory(inv);
     }
-    
+
     private static void setChests(Inventory inv, Crate crate) {
         CosmicCrateManager manager = (CosmicCrateManager) crate.getManager();
         int slot = 1;
@@ -58,7 +58,7 @@ public class Cosmic implements Listener {
             slot++;
         }
     }
-    
+
     public static void openCosmic(Player player, Crate crate, KeyType keyType, boolean checkHand) {
         Inventory inv = Bukkit.createInventory(null, 27, Methods.sanitizeColor(crate.getFile().getString("Crate.CrateName") + " - Choose"));
         setChests(inv, crate);
@@ -66,7 +66,7 @@ public class Cosmic implements Listener {
         checkHands.put(player, checkHand);
         player.openInventory(inv);
     }
-    
+
     private static Tier pickTier(Player player) {
         Crate crate = cc.getOpeningCrate(player);
         if (crate.getTiers() != null && !crate.getTiers().isEmpty()) {
@@ -82,7 +82,7 @@ public class Cosmic implements Listener {
         }
         return null;
     }
-    
+
     @EventHandler
     public void onInvClick(InventoryClickEvent e) {
         final Inventory inv = e.getInventory();
@@ -177,7 +177,7 @@ public class Cosmic implements Listener {
                             }
                             cc.addCrateTask(player, new BukkitRunnable() {
                                 int time = 0;
-                                
+
                                 @Override
                                 public void run() {
                                     try {
@@ -191,7 +191,7 @@ public class Cosmic implements Listener {
                                             cancel();
                                             player.sendMessage(Methods.getPrefix("&cAn issue has occurred and so a key refund was given."));
                                             System.out.println(FileManager.getInstance().getPrefix() + "An issue occurred when the user " + player.getName() +
-                                            " was using the " + crate.getName() + " crate and so they were issued a key refund.");
+                                                    " was using the " + crate.getName() + " crate and so they were issued a key refund.");
                                             e.printStackTrace();
                                         }
                                         return;
@@ -218,7 +218,7 @@ public class Cosmic implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onInvClose(InventoryCloseEvent e) {
         Inventory inv = e.getInventory();
@@ -273,7 +273,7 @@ public class Cosmic implements Listener {
             checkHands.remove(player);
         }
     }
-    
+
     private Tier getTier(Crate crate, ItemStack item) {
         for (Tier tier : crate.getTiers()) {
             if (tier.getTierPane().isSimilar(item)) {
@@ -282,10 +282,10 @@ public class Cosmic implements Listener {
         }
         return null;
     }
-    
+
     private boolean inCosmic(int slot) {
         //The last slot in cosmic crate is 27
         return slot < 27;
     }
-    
+
 }

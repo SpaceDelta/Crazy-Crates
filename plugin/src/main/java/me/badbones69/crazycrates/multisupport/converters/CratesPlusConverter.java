@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CratesPlusConverter {
-    
+
     private static CrazyCrates cc = CrazyCrates.getInstance();
     private static CratesPlus cratesPlus = CratesPlus.getOpenHandler().getCratesPlus();
     private static List<CrateConvertInfo> convertedCrates = new ArrayList<>();
-    
+
     public static void convert() {
         int slot = 1;
         FileConfiguration config = cratesPlus.getConfig();
@@ -26,28 +26,28 @@ public class CratesPlusConverter {
             String path = "Crates." + crateName + ".";
             if (config.contains(path + "Winnings")) {
                 convertedCrates.add(new CrateConvertInfo()
-                .setCrateName(crateName)
-                .setGUIName(config.getString(path + "GUI Title", "&7" + crateName))
-                .setInGUI(true)
-                .setOpeningBrodcastEnabled(crate.isBroadcast())
-                .setBroadcast("%Prefix%&6&l%Player% &7is opening a &7&l" + crateName + " Chest&7.")
-                .setDisplayItem(new ItemBuilder()
-                .setMaterial(crate.getBlock())
-                .setDamage(crate.getBlockData())
-                .setName(config.getString(path + "Item Title", crateName))
-                .setLore(config.getStringList(path + "Lore")))
-                .setPreviewEnabled(config.getBoolean(path + "Preview"))
-                .setPreviewName("&7" + crateName + " Preview")
-                .setSlot(slot)
-                .setPreviewLines(6)
-                .setBoarderEnabled(true)
-                .setBoarderItem(new ItemBuilder().setMaterial("GRAY_STAINED_GLASS_PANE", "STAINED_GLASS_PANE:7"))
-                .setPhysicalKey(new ItemBuilder()
-                .setMaterial(config.getString(path + "Key.Item", "TRIPWIRE_HOOK"))
-                .setName(config.getString(path + "Key.Name", crateName).replace("%type%", crateName))
-                .setLore(config.getStringList(path + "Key.Lore"))
-                .setGlowing(config.getBoolean(path + "Key.Enchanted")))
-                .setPrizes(convertPrizes(path, crateName, crate)));
+                        .setCrateName(crateName)
+                        .setGUIName(config.getString(path + "GUI Title", "&7" + crateName))
+                        .setInGUI(true)
+                        .setOpeningBrodcastEnabled(crate.isBroadcast())
+                        .setBroadcast("%Prefix%&6&l%Player% &7is opening a &7&l" + crateName + " Chest&7.")
+                        .setDisplayItem(new ItemBuilder()
+                                .setMaterial(crate.getBlock())
+                                .setDamage(crate.getBlockData())
+                                .setName(config.getString(path + "Item Title", crateName))
+                                .setLore(config.getStringList(path + "Lore")))
+                        .setPreviewEnabled(config.getBoolean(path + "Preview"))
+                        .setPreviewName("&7" + crateName + " Preview")
+                        .setSlot(slot)
+                        .setPreviewLines(6)
+                        .setBoarderEnabled(true)
+                        .setBoarderItem(new ItemBuilder().setMaterial("GRAY_STAINED_GLASS_PANE", "STAINED_GLASS_PANE:7"))
+                        .setPhysicalKey(new ItemBuilder()
+                                .setMaterial(config.getString(path + "Key.Item", "TRIPWIRE_HOOK"))
+                                .setName(config.getString(path + "Key.Name", crateName).replace("%type%", crateName))
+                                .setLore(config.getStringList(path + "Key.Lore"))
+                                .setGlowing(config.getBoolean(path + "Key.Enchanted")))
+                        .setPrizes(convertPrizes(path, crateName, crate)));
                 slot++;
             }
         }
@@ -123,30 +123,26 @@ public class CratesPlusConverter {
             }
         }
     }
-    
-    public List<CrateConvertInfo> getConvertedCrates() {
-        return convertedCrates;
-    }
-    
+
     private static List<PrizeConvertInfo> convertPrizes(String path, String crateName, Crate crate) {
         List<PrizeConvertInfo> prizes = new ArrayList<>();
         FileConfiguration config = cratesPlus.getConfig();
         for (String id : config.getConfigurationSection(path + "Winnings").getKeys(false)) {
             String prizePath = path + "Winnings." + id + ".";
             PrizeConvertInfo convertedPrize = new PrizeConvertInfo()
-            .setCrate(crateName)
-            .setName(id)
-            .setDisplayItem(new ItemBuilder()
-            .setMaterial(config.contains(prizePath + "Item Type") ? config.getString(prizePath + "Item Type") : config.getString(prizePath + "Block Type", "Stone"))
-            .setDamage(config.contains(prizePath + "Item Data") ? config.getInt(prizePath + "Item Data") : config.getInt(prizePath + "Metadata", 0))
-            .setEntityType(EntityType.valueOf(config.getString(prizePath + "Entity Type", "CREEPER")))
-            .setAmount(config.getInt(prizePath + "Amount", 1))
-            .setName(config.getString(prizePath + "Name", ""))
-            .setLore(config.getStringList(prizePath + "Lore")));
+                    .setCrate(crateName)
+                    .setName(id)
+                    .setDisplayItem(new ItemBuilder()
+                            .setMaterial(config.contains(prizePath + "Item Type") ? config.getString(prizePath + "Item Type") : config.getString(prizePath + "Block Type", "Stone"))
+                            .setDamage(config.contains(prizePath + "Item Data") ? config.getInt(prizePath + "Item Data") : config.getInt(prizePath + "Metadata", 0))
+                            .setEntityType(EntityType.valueOf(config.getString(prizePath + "Entity Type", "CREEPER")))
+                            .setAmount(config.getInt(prizePath + "Amount", 1))
+                            .setName(config.getString(prizePath + "Name", ""))
+                            .setLore(config.getStringList(prizePath + "Lore")));
             config.getStringList(prizePath + "Enchantments").forEach(enchantment -> convertedPrize.addDisplayEnchantments(enchantment.replace("-", ":")));
             convertedPrize.setMaxRange(100)
-            .setChance(config.getInt(prizePath + "Percentage", 50))
-            .setFirework(crate.isFirework());
+                    .setChance(config.getInt(prizePath + "Percentage", 50))
+                    .setFirework(crate.isFirework());
             if (config.getString(prizePath + "Type").equalsIgnoreCase("item") || config.getString(prizePath + "Type").equalsIgnoreCase("block")) {
                 ItemBuilder displayItem = convertedPrize.getDisplayItem();
                 String displayItemString = displayItem.getMaterial().name();
@@ -156,16 +152,16 @@ public class CratesPlusConverter {
                     displayItemString += (displayItem.getDamage() > 0 ? ":" + displayItem.getDamage() : "");
                 }
                 String item =
-                "Item:" + displayItemString + ", " +
-                (displayItem.getAmount() == 1 ? "" : "Amount:" + displayItem.getAmount() + ", ") +
-                (displayItem.getName().isEmpty() || displayItem.getName().equalsIgnoreCase("none") ? "" : "Name:" + displayItem.getName() + ", ");
+                        "Item:" + displayItemString + ", " +
+                                (displayItem.getAmount() == 1 ? "" : "Amount:" + displayItem.getAmount() + ", ") +
+                                (displayItem.getName().isEmpty() || displayItem.getName().equalsIgnoreCase("none") ? "" : "Name:" + displayItem.getName() + ", ");
                 if (!displayItem.getLore().isEmpty()) {
                     item += "Lore:";
                     for (String lore : displayItem.getLore()) {
                         item += lore + ",";
                     }
                     item = item.substring(0, item.length() - 1) + ", ";
-                    
+
                 }
                 if (!convertedPrize.getDisplayEnchantments().isEmpty()) {
                     for (String enchantment : convertedPrize.getDisplayEnchantments()) {
@@ -185,5 +181,9 @@ public class CratesPlusConverter {
         }
         return prizes;
     }
-    
+
+    public List<CrateConvertInfo> getConvertedCrates() {
+        return convertedCrates;
+    }
+
 }

@@ -12,10 +12,10 @@ import org.bukkit.block.Block;
 import java.util.HashMap;
 
 public class HolographicSupport implements HologramController {
-    
+
     private static CrazyCrates cc = CrazyCrates.getInstance();
     private static HashMap<Block, Hologram> holograms = new HashMap<>();
-    
+
     public void createHologram(Block block, Crate crate) {
         CrateHologram crateHologram = crate.getHologram();
         if (crateHologram.isEnabled()) {
@@ -27,7 +27,7 @@ public class HolographicSupport implements HologramController {
             holograms.put(block, hologram);
         }
     }
-    
+
     public void removeHologram(Block block) {
         if (holograms.containsKey(block)) {
             Hologram hologram = holograms.get(block);
@@ -35,12 +35,12 @@ public class HolographicSupport implements HologramController {
             hologram.delete();
         }
     }
-    
+
     public void removeAllHolograms() {
         for (Block block : holograms.keySet()) {
             holograms.get(block).delete();
         }
         holograms.clear();
     }
-    
+
 }

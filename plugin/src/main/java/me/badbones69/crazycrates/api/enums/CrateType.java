@@ -1,7 +1,7 @@
 package me.badbones69.crazycrates.api.enums;
 
 public enum CrateType {
-    
+
     MENU("Menu"),
     COSMIC("Cosmic"),
     CRATE_ON_THE_GO("CrateOnTheGo"),
@@ -13,13 +13,13 @@ public enum CrateType {
     WHEEL("Wheel"),
     WONDER("Wonder"),
     WAR("War");
-    
+
     private String name;
-    
+
     private CrateType(String name) {
         this.name = name;
     }
-    
+
     public static CrateType getFromName(String name) {
         for (CrateType crate : CrateType.values()) {
             if (crate.getName().equalsIgnoreCase(name)) {
@@ -28,9 +28,9 @@ public enum CrateType {
         }
         return null;
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
 }

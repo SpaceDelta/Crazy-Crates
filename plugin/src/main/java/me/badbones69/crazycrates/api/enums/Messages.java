@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 public enum Messages {
-    
+
     NO_TELEPORTING("No-Teleporting", "&cYou may not teleport away while opening a crate."),
     NO_COMMANDS_WHILE_CRATE_OPENED("No-Commands-While-In-Crate", "&cYou are not allowed to use commands while opening Crates."),
     NO_KEY("No-Key", "&cYou must have a %key% &cin your hand to use that Crate."),
@@ -59,42 +59,42 @@ public enum Messages {
     NO_FILES_TO_CONVERT("Files-Converted.No-Files-To-Convert", "&cNo plugins that can be converted were found."),
     ERROR_CONVERTING_FILES("Files-Converted.Error-Converting-Files", "&cThere was an error while trying to convert files. Please check console for the error log."),
     HELP("Help",
-    Arrays.asList(
-    "&3&lCrazy Crates Help Menu",
-    "&6/key [player] &7- Check the number of keys a player has.",
-    "&6/cc &7- Opens the GUI.",
-    "&6/cc additem <crate> <prize> &7- Add items in-game to a prize in a crate.",
-    "&6/cc admin &7- Opens the Admin Keys GUI.",
-    "&6/cc preview <crate> [player] &7- Opens the preview of a crate for a player.",
-    "&6/cc list &7- Lists all the Crates.",
-    "&6/cc open <crate> [player] &7- Tries to open a crate for a player if they have a key.",
-    "&6/cc forceopen <crate> [player] &7- Opens a crate for a player for free.",
-    "&6/cc tp <location> &7- Teleport to a Crate.",
-    "&6/cc give <physical/virtual> <crate> [amount] [player] &7- Give a player keys for a Chest.",
-    "&6/cc giveall <physical/virtual> <crate> [amount] &7- Gives all online players keys for a Chest.",
-    "&6/cc take <physical/virtual> <crate> [amount] [player] &7- Allows you to take keys from a player.",
-    "&6/cc set <crate> &7- Set a block you are looking at as a crate.",
-    "&6/cc set Menu &7- Set the block you are looking at to open the /cc GUI.",
-    "&6/cc reload &7- Reloads the Config and Data Files.",
-    "&6/cc convert &7- Tries to convert supported plugin's crate files into crazy crate's crate files.",
-    "&6/cc set1/set2 &7- Set position #1 or #2 for when making a new schematic for quadcrates. &c1.13+ only",
-    "&6/cc save <schematic file name> &7- Save the new schematic file to the schematics folder. &c1.13+ only",
-    "&7List of permissions can be found here: &bhttps://github.com/badbones69/Crazy-Crates/wiki/Commands-and-Permissions"));
-    
+            Arrays.asList(
+                    "&3&lCrazy Crates Help Menu",
+                    "&6/key [player] &7- Check the number of keys a player has.",
+                    "&6/cc &7- Opens the GUI.",
+                    "&6/cc additem <crate> <prize> &7- Add items in-game to a prize in a crate.",
+                    "&6/cc admin &7- Opens the Admin Keys GUI.",
+                    "&6/cc preview <crate> [player] &7- Opens the preview of a crate for a player.",
+                    "&6/cc list &7- Lists all the Crates.",
+                    "&6/cc open <crate> [player] &7- Tries to open a crate for a player if they have a key.",
+                    "&6/cc forceopen <crate> [player] &7- Opens a crate for a player for free.",
+                    "&6/cc tp <location> &7- Teleport to a Crate.",
+                    "&6/cc give <physical/virtual> <crate> [amount] [player] &7- Give a player keys for a Chest.",
+                    "&6/cc giveall <physical/virtual> <crate> [amount] &7- Gives all online players keys for a Chest.",
+                    "&6/cc take <physical/virtual> <crate> [amount] [player] &7- Allows you to take keys from a player.",
+                    "&6/cc set <crate> &7- Set a block you are looking at as a crate.",
+                    "&6/cc set Menu &7- Set the block you are looking at to open the /cc GUI.",
+                    "&6/cc reload &7- Reloads the Config and Data Files.",
+                    "&6/cc convert &7- Tries to convert supported plugin's crate files into crazy crate's crate files.",
+                    "&6/cc set1/set2 &7- Set position #1 or #2 for when making a new schematic for quadcrates. &c1.13+ only",
+                    "&6/cc save <schematic file name> &7- Save the new schematic file to the schematics folder. &c1.13+ only",
+                    "&7List of permissions can be found here: &bhttps://github.com/badbones69/Crazy-Crates/wiki/Commands-and-Permissions"));
+
     private String path;
     private String defaultMessage;
     private List<String> defaultListMessage;
-    
+
     private Messages(String path, String defaultMessage) {
         this.path = path;
         this.defaultMessage = defaultMessage;
     }
-    
+
     private Messages(String path, List<String> defaultListMessage) {
         this.path = path;
         this.defaultListMessage = defaultListMessage;
     }
-    
+
     public static String convertList(List<String> list) {
         String message = "";
         for (String line : list) {
@@ -102,7 +102,7 @@ public enum Messages {
         }
         return message;
     }
-    
+
     public static void addMissingMessages() {
         FileConfiguration messages = Files.MESSAGES.getFile();
         boolean saveFile = false;
@@ -120,70 +120,70 @@ public enum Messages {
             Files.MESSAGES.saveFile();
         }
     }
-    
+
     public static String replacePlaceholders(String placeholder, String replacement, String message) {
         HashMap<String, String> placeholders = new HashMap<>();
         placeholders.put(placeholder, replacement);
         return replacePlaceholders(placeholders, message);
     }
-    
+
     public static String replacePlaceholders(Map<String, String> placeholders, String message) {
         for (Entry<String, String> placeholder : placeholders.entrySet()) {
             message = message.replace(placeholder.getKey(), placeholder.getValue())
-            .replace(placeholder.getKey().toLowerCase(), placeholder.getValue());
+                    .replace(placeholder.getKey().toLowerCase(), placeholder.getValue());
         }
         return message;
     }
-    
+
     public static List<String> replacePlaceholders(String placeholder, String replacement, List<String> messageList) {
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put(placeholder, replacement);
         return replacePlaceholders(placeholders, messageList);
     }
-    
+
     public static List<String> replacePlaceholders(Map<String, String> placeholders, List<String> messageList) {
         List<String> newMessageList = new ArrayList<>();
         for (String message : messageList) {
             for (Entry<String, String> placeholder : placeholders.entrySet()) {
                 message = message.replace(placeholder.getKey(), placeholder.getValue())
-                .replace(placeholder.getKey().toLowerCase(), placeholder.getValue());
+                        .replace(placeholder.getKey().toLowerCase(), placeholder.getValue());
             }
         }
         return newMessageList;
     }
-    
+
     public String getMessage() {
         return getMessage(true);
     }
-    
+
     public String getMessage(String placeholder, String replacement) {
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put(placeholder, replacement);
         return getMessage(placeholders, true);
     }
-    
+
     public String getMessage(Map<String, String> placeholders) {
         return getMessage(placeholders, true);
     }
-    
+
     public String getMessageNoPrefix() {
         return getMessage(false);
     }
-    
+
     public String getMessageNoPrefix(String placeholder, String replacement) {
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put(placeholder, replacement);
         return getMessage(placeholders, false);
     }
-    
+
     public String getMessageNoPrefix(Map<String, String> placeholders) {
         return getMessage(placeholders, false);
     }
-    
+
     private String getMessage(boolean prefix) {
         return getMessage(new HashMap<>(), prefix);
     }
-    
+
     private String getMessage(Map<String, String> placeholders, boolean prefix) {
         String message;
         boolean isList = isList();
@@ -203,7 +203,7 @@ public enum Messages {
         }
         for (Entry<String, String> placeholder : placeholders.entrySet()) {
             message = message.replace(placeholder.getKey(), placeholder.getValue())
-            .replace(placeholder.getKey().toLowerCase(), placeholder.getValue());
+                    .replace(placeholder.getKey().toLowerCase(), placeholder.getValue());
         }
         if (isList) {//Don't want to add a prefix to a list of messages.
             return Methods.color(message);
@@ -215,11 +215,11 @@ public enum Messages {
             }
         }
     }
-    
+
     private boolean exists() {
         return Files.MESSAGES.getFile().contains("Messages." + path);
     }
-    
+
     private boolean isList() {
         if (Files.MESSAGES.getFile().contains("Messages." + path)) {
             return !Files.MESSAGES.getFile().getStringList("Messages." + path).isEmpty();
@@ -227,17 +227,17 @@ public enum Messages {
             return defaultMessage == null;
         }
     }
-    
+
     private String getPath() {
         return path;
     }
-    
+
     private String getDefaultMessage() {
         return defaultMessage;
     }
-    
+
     private List<String> getDefaultListMessage() {
         return defaultListMessage;
     }
-    
+
 }

@@ -1,10 +1,12 @@
 name: CrazyCrates
 main: me.badbones69.crazycrates.Main
-author: BadBones69
+authors: [ BadBones69, Ellie ]
 version: ${project.version}${build.number}
 api-version: 1.13
+
 softdepend: [HolographicDisplays, Holograms, MVdWPlaceholderAPI, PlaceholderAPI, CratesPlus]
 description: Want some good quality crates without paying money for them? Then check this crate plugin out.
+
 commands:
   crazycrates:
     description: Opens the GUI.

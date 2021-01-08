@@ -21,12 +21,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class Main extends JavaPlugin implements Listener {
-    
+
+    private final CrazyCrates cc = CrazyCrates.getInstance();
+    private final FileManager fileManager = FileManager.getInstance();
     private boolean updateChecker = false;
-    private CrazyCrates cc = CrazyCrates.getInstance();
-    private FileManager fileManager = FileManager.getInstance();
     private boolean isEnabled = true;// If the server is supported
-    
+
     @Override
     public void onEnable() {
         if (Version.getCurrentVersion().isOlder(Version.v1_8_R3)) {// Disables plugin on unsupported versions
@@ -34,7 +34,7 @@ public class Main extends JavaPlugin implements Listener {
             System.out.println("============= Crazy Crates =============");
             System.out.println(" ");
             System.out.println("Plugin Disabled: This server is running on 1.8.3 or below and Crazy Crates does not support those versions. "
-            + "Please check the spigot page for more information about lower Minecraft versions.");
+                    + "Please check the spigot page for more information about lower Minecraft versions.");
             System.out.println(" ");
             System.out.println("Plugin Page: https://www.spigotmc.org/resources/17599/");
             System.out.println("Version Integer: " + Version.getCurrentVersion().getVersionInteger());
@@ -48,21 +48,21 @@ public class Main extends JavaPlugin implements Listener {
         String cratesFolder = Version.getCurrentVersion().isNewer(Version.v1_12_R1) ? "/Crates1.13-Up" : "/Crates1.12.2-Down";
         String schemFolder = Version.getCurrentVersion().isNewer(Version.v1_12_R1) ? "/Schematics1.13-Up" : "/Schematics1.12.2-Down";
         fileManager.logInfo(true)
-        .registerDefaultGenerateFiles("Basic.yml", "/Crates", cratesFolder)
-        .registerDefaultGenerateFiles("Classic.yml", "/Crates", cratesFolder)
-        .registerDefaultGenerateFiles("Crazy.yml", "/Crates", cratesFolder)
-        .registerDefaultGenerateFiles("Galactic.yml", "/Crates", cratesFolder)
-        //Schematics
-        .registerDefaultGenerateFiles("classic." + extention, "/Schematics", schemFolder)
-        .registerDefaultGenerateFiles("nether." + extention, "/Schematics", schemFolder)
-        .registerDefaultGenerateFiles("outdoors." + extention, "/Schematics", schemFolder)
-        .registerDefaultGenerateFiles("sea." + extention, "/Schematics", schemFolder)
-        .registerDefaultGenerateFiles("soul." + extention, "/Schematics", schemFolder)
-        .registerDefaultGenerateFiles("wooden." + extention, "/Schematics", schemFolder)
-        //Register all files inside the custom folders.
-        .registerCustomFilesFolder("/Crates")
-        .registerCustomFilesFolder("/Schematics")
-        .setup(this);
+                .registerDefaultGenerateFiles("Basic.yml", "/Crates", cratesFolder)
+                .registerDefaultGenerateFiles("Classic.yml", "/Crates", cratesFolder)
+                .registerDefaultGenerateFiles("Crazy.yml", "/Crates", cratesFolder)
+                .registerDefaultGenerateFiles("Galactic.yml", "/Crates", cratesFolder)
+                //Schematics
+                .registerDefaultGenerateFiles("classic." + extention, "/Schematics", schemFolder)
+                .registerDefaultGenerateFiles("nether." + extention, "/Schematics", schemFolder)
+                .registerDefaultGenerateFiles("outdoors." + extention, "/Schematics", schemFolder)
+                .registerDefaultGenerateFiles("sea." + extention, "/Schematics", schemFolder)
+                .registerDefaultGenerateFiles("soul." + extention, "/Schematics", schemFolder)
+                .registerDefaultGenerateFiles("wooden." + extention, "/Schematics", schemFolder)
+                //Register all files inside the custom folders.
+                .registerCustomFilesFolder("/Crates")
+                .registerCustomFilesFolder("/Schematics")
+                .setup(this);
         if (!Files.LOCATIONS.getFile().contains("Locations")) {
             Files.LOCATIONS.getFile().set("Locations.Clear", null);
             Files.LOCATIONS.saveFile();
@@ -105,12 +105,13 @@ public class Main extends JavaPlugin implements Listener {
         }
         Methods.hasUpdate();
         new Metrics(this); //Starts up bStats
+
         getCommand("key").setExecutor(new KeyCommand());
         getCommand("key").setTabCompleter(new KeyTab());
         getCommand("crazycrates").setExecutor(new CCCommand());
         getCommand("crazycrates").setTabCompleter(new CCTab());
     }
-    
+
     @Override
     public void onDisable() {
         if (isEnabled) {
@@ -121,7 +122,7 @@ public class Main extends JavaPlugin implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
@@ -139,5 +140,5 @@ public class Main extends JavaPlugin implements Listener {
             }
         }.runTaskLaterAsynchronously(this, 40);
     }
-    
+
 }

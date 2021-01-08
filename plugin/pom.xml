@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -37,6 +38,15 @@
     <dependencies>
         <dependency>
             <groupId>me.badbones69</groupId>
+            <artifactId>crazycrates-v1_15_R1</artifactId>
+            <version>${project.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
+        <!-- Start SpaceDelta
+        <dependency>
+            <groupId>me.badbones69</groupId>
             <artifactId>crazycrates-v1_16_R3</artifactId>
             <version>${project.version}</version>
             <type>jar</type>
@@ -54,14 +64,6 @@
         <dependency>
             <groupId>me.badbones69</groupId>
             <artifactId>crazycrates-v1_16_R1</artifactId>
-            <version>${project.version}</version>
-            <type>jar</type>
-            <scope>compile</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>me.badbones69</groupId>
-            <artifactId>crazycrates-v1_15_R1</artifactId>
             <version>${project.version}</version>
             <type>jar</type>
             <scope>compile</scope>
@@ -131,6 +133,7 @@
             <scope>compile</scope>
             <optional>true</optional>
         </dependency>
+                      End SpaceDelta !-->
         <dependency>
             <groupId>me.badbones69</groupId>
             <artifactId>crazycrates-api</artifactId>
@@ -139,6 +142,7 @@
             <scope>compile</scope>
             <optional>true</optional>
         </dependency>
+
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>

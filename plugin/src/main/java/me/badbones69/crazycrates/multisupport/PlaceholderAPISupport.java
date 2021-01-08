@@ -11,14 +11,14 @@ import org.bukkit.plugin.Plugin;
 import java.text.NumberFormat;
 
 public class PlaceholderAPISupport extends PlaceholderExpansion {
-    
+
     private CrazyCrates cc = CrazyCrates.getInstance();
     private Plugin plugin;
-    
+
     public PlaceholderAPISupport(Plugin plugin) {
         this.plugin = plugin;
     }
-    
+
     @Override
     public String onRequest(OfflinePlayer player, String identifier) {
         if (player.isOnline()) {
@@ -37,25 +37,25 @@ public class PlaceholderAPISupport extends PlaceholderExpansion {
         }
         return "";
     }
-    
+
     @Override
     public boolean persist() {
         return true;
     }
-    
+
     @Override
     public String getIdentifier() {
         return "crazycrates";
     }
-    
+
     @Override
     public String getAuthor() {
         return "BadBones69";
     }
-    
+
     @Override
     public String getVersion() {
         return plugin.getDescription().getVersion();
     }
-    
+
 }

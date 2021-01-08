@@ -14,9 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class KeyCommand implements CommandExecutor {
-    
+
     private CrazyCrates cc = CrazyCrates.getInstance();
-    
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLable, String[] args) {
         // /key [player]
@@ -80,5 +80,5 @@ public class KeyCommand implements CommandExecutor {
         }
         return true;
     }
-    
+
 }

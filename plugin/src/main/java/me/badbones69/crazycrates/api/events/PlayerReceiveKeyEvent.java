@@ -7,47 +7,47 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 public class PlayerReceiveKeyEvent extends Event implements Cancellable {
-    
+
     private Player player;
     private Crate crate;
     private KeyReciveReason reason;
     private boolean isCancelled;
     private HandlerList handlers = new HandlerList();
-    
+
     public PlayerReceiveKeyEvent(Player player, Crate crate, KeyReciveReason reason) {
         this.player = player;
         this.crate = crate;
         this.reason = reason;
         isCancelled = false;
     }
-    
+
     public Player getPlayer() {
         return player;
     }
-    
+
     public Crate getCrate() {
         return crate;
     }
-    
+
     public KeyReciveReason getReason() {
         return reason;
     }
-    
+
     @Override
     public boolean isCancelled() {
         return isCancelled;
     }
-    
+
     @Override
     public void setCancelled(boolean cancel) {
         isCancelled = cancel;
     }
-    
+
     @Override
     public HandlerList getHandlers() {
         return handlers;
     }
-    
+
     public enum KeyReciveReason {
         /**
          * Received a key from the /cc give command.
@@ -70,5 +70,5 @@ public class PlayerReceiveKeyEvent extends Event implements Cancellable {
          */
         TRANSFER
     }
-    
+
 }

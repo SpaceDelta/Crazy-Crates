@@ -25,9 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GUIMenu implements Listener {
-    
+
     private static CrazyCrates cc = CrazyCrates.getInstance();
-    
+
     public static void openGUI(Player player) {
         int size = Files.CONFIG.getFile().getInt("Settings.InventorySize");
         Inventory inv = Bukkit.createInventory(null, size, Methods.sanitizeColor(Files.CONFIG.getFile().getString("Settings.InventoryName")));
@@ -56,8 +56,8 @@ public class GUIMenu implements Listener {
                         for (Crate crate : cc.getCrates()) {
                             if (crate.getCrateType() != CrateType.MENU) {
                                 option = option.replaceAll("%" + crate.getName().toLowerCase() + "%", cc.getVirtualKeys(player, crate) + "")
-                                .replaceAll("%" + crate.getName().toLowerCase() + "_physical%", cc.getPhysicalKeys(player, crate) + "")
-                                .replaceAll("%" + crate.getName().toLowerCase() + "_total%", cc.getTotalKeys(player, crate) + "");
+                                        .replaceAll("%" + crate.getName().toLowerCase() + "_physical%", cc.getPhysicalKeys(player, crate) + "")
+                                        .replaceAll("%" + crate.getName().toLowerCase() + "_total%", cc.getTotalKeys(player, crate) + "");
                             }
                         }
                         item.setName(option.replaceAll("%player%", player.getName()));
@@ -69,8 +69,8 @@ public class GUIMenu implements Listener {
                             for (Crate crate : cc.getCrates()) {
                                 if (crate.getCrateType() != CrateType.MENU) {
                                     option = option.replaceAll("%" + crate.getName().toLowerCase() + "%", cc.getVirtualKeys(player, crate) + "")
-                                    .replaceAll("%" + crate.getName().toLowerCase() + "_physical%", cc.getPhysicalKeys(player, crate) + "")
-                                    .replaceAll("%" + crate.getName().toLowerCase() + "_total%", cc.getTotalKeys(player, crate) + "");
+                                            .replaceAll("%" + crate.getName().toLowerCase() + "_physical%", cc.getPhysicalKeys(player, crate) + "")
+                                            .replaceAll("%" + crate.getName().toLowerCase() + "_total%", cc.getTotalKeys(player, crate) + "");
                                 }
                             }
                             item.addLore(option.replaceAll("%player%", player.getName()));
@@ -110,23 +110,23 @@ public class GUIMenu implements Listener {
                     }
                     slot--;
                     inv.setItem(slot, new ItemBuilder()
-                    .setMaterial(file.getString(path + "Item"))
-                    .setName(file.getString(path + "Name"))
-                    .setLore(file.getStringList(path + "Lore"))
-                    .setCrateName(crate.getName())
-                    .setPlayer(file.getString(path + "Player"))
-                    .setGlowing(file.getBoolean(path + "Glowing"))
-                    .addLorePlaceholder("%Keys%", NumberFormat.getNumberInstance().format(cc.getVirtualKeys(player, crate)))
-                    .addLorePlaceholder("%Keys_Physical%", NumberFormat.getNumberInstance().format(cc.getPhysicalKeys(player, crate)))
-                    .addLorePlaceholder("%Keys_Total%", NumberFormat.getNumberInstance().format(cc.getTotalKeys(player, crate)))
-                    .addLorePlaceholder("%Player%", player.getName())
-                    .build());
+                            .setMaterial(file.getString(path + "Item"))
+                            .setName(file.getString(path + "Name"))
+                            .setLore(file.getStringList(path + "Lore"))
+                            .setCrateName(crate.getName())
+                            .setPlayer(file.getString(path + "Player"))
+                            .setGlowing(file.getBoolean(path + "Glowing"))
+                            .addLorePlaceholder("%Keys%", NumberFormat.getNumberInstance().format(cc.getVirtualKeys(player, crate)))
+                            .addLorePlaceholder("%Keys_Physical%", NumberFormat.getNumberInstance().format(cc.getPhysicalKeys(player, crate)))
+                            .addLorePlaceholder("%Keys_Total%", NumberFormat.getNumberInstance().format(cc.getTotalKeys(player, crate)))
+                            .addLorePlaceholder("%Player%", player.getName())
+                            .build());
                 }
             }
         }
         player.openInventory(inv);
     }
-    
+
     @EventHandler
     public void onInvClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
@@ -199,9 +199,9 @@ public class GUIMenu implements Listener {
             }
         }
     }
-    
+
     private ArrayList<String> getDisabledWorlds() {
         return new ArrayList<>(Files.CONFIG.getFile().getStringList("Settings.DisabledWorlds"));
     }
-    
+
 }

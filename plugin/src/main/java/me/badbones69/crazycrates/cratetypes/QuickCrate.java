@@ -27,12 +27,12 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class QuickCrate implements Listener {
-    
+
     public static ArrayList<Entity> allRewards = new ArrayList<>();
     public static HashMap<Player, Entity> rewards = new HashMap<>();
     private static CrazyCrates cc = CrazyCrates.getInstance();
     private static HashMap<Player, BukkitTask> tasks = new HashMap<>();
-    
+
     public static void openCrate(final Player player, final Location loc, Crate crate, KeyType keyType) {
         int keys;// If the key is free it is set to one.
         switch (keyType) {
@@ -109,7 +109,7 @@ public class QuickCrate implements Listener {
             }.runTaskLater(cc.getPlugin(), 5 * 20));
         }
     }
-    
+
     public static void endQuickCrate(Player player, Location loc) {
         if (tasks.containsKey(player)) {
             tasks.get(player).cancel();
@@ -124,16 +124,16 @@ public class QuickCrate implements Listener {
         CrateControl.inUse.remove(player);
         cc.removePlayerFromOpeningList(player);
     }
-    
+
     public static void removeAllRewards() {
-        allRewards.stream().filter(Objects :: nonNull).forEach(Entity :: remove);
+        allRewards.stream().filter(Objects::nonNull).forEach(Entity::remove);
     }
-    
+
     @EventHandler
     public void onHopperPickUp(InventoryPickupItemEvent e) {
         if (cc.isDisplayReward(e.getItem())) {
             e.setCancelled(true);
         }
     }
-    
+
 }

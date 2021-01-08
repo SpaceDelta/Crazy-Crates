@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NMS_v1_14_R1 implements NMSSupport {
-    
+
     @Override
     public void openChest(Block block, boolean open) {
         Material type = block.getType();
@@ -34,7 +34,7 @@ public class NMS_v1_14_R1 implements NMSSupport {
             }
         }
     }
-    
+
     @Override
     public void saveSchematic(Location[] locations, String owner, File file) {
         try {
@@ -43,7 +43,7 @@ public class NMS_v1_14_R1 implements NMSSupport {
             e.printStackTrace();
         }
     }
-    
+
     //https://www.spigotmc.org/threads/pasting-schematics-in-1-13.333643/#post-3312204
     @Override
     public void pasteSchematic(File f, Location loc) {
@@ -56,7 +56,7 @@ public class NMS_v1_14_R1 implements NMSSupport {
             e.printStackTrace();
         }
     }
-    
+
     @Override
     public List<Location> getLocations(File f, Location loc) {
         try {
@@ -68,7 +68,7 @@ public class NMS_v1_14_R1 implements NMSSupport {
         }
         return null;
     }
-    
+
     @Override
     public List<Material> getQuadCrateBlacklistBlocks() {
         List<Material> blockList = new ArrayList<>();
@@ -94,10 +94,10 @@ public class NMS_v1_14_R1 implements NMSSupport {
         blockList.add(Material.STONE_BUTTON);
         return blockList;
     }
-    
+
     @Override
     public ItemStack getItemInMainHand(Player player) {
         return player.getInventory().getItemInMainHand();
     }
-    
+
 }

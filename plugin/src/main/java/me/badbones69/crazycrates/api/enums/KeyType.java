@@ -1,17 +1,17 @@
 package me.badbones69.crazycrates.api.enums;
 
 public enum KeyType {
-    
+
     PHYSICAL_KEY("Physical_Key"),
     VIRTUAL_KEY("Virtual_Key"),
     FREE_KEY("Free_Key");
-    
+
     private String name;
-    
+
     private KeyType(String name) {
         this.name = name;
     }
-    
+
     public static KeyType getFromName(String type) {
         if (type.equalsIgnoreCase("virtual") || type.equalsIgnoreCase("v")) {
             return KeyType.VIRTUAL_KEY;
@@ -22,9 +22,9 @@ public enum KeyType {
         }
         return null;
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
 }

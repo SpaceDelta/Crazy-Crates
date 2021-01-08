@@ -29,21 +29,21 @@ import java.util.Random;
 
 /**
  * Controller class for the quadcrate crate type.
- *
+ * <p>
  * Display items are controlled from the quick crate due to them using nbt tags.
  */
 public class QuadCrate implements Listener {
-    
+
     private CrazyCrates cc = CrazyCrates.getInstance();
     private NMSSupport nms = cc.getNMSSupport();
-    
+
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         if (QuadCrateSession.inSession(e.getPlayer())) {
             e.setCancelled(true);
         }
     }
-    
+
     @EventHandler
     public void onChestClick(PlayerInteractEvent e) {
         Player player = e.getPlayer();
@@ -86,7 +86,7 @@ public class QuadCrate implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent e) {
         Player player = e.getPlayer();
@@ -114,14 +114,14 @@ public class QuadCrate implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
         if (QuadCrateSession.inSession(e.getPlayer())) {
             e.setCancelled(true);
         }
     }
-    
+
     @EventHandler
     public void onCMD(PlayerCommandPreprocessEvent e) {
         Player player = e.getPlayer();
@@ -130,7 +130,7 @@ public class QuadCrate implements Listener {
             player.sendMessage(Messages.NO_COMMANDS_WHILE_CRATE_OPENED.getMessage("%Player%", player.getName()));
         }
     }
-    
+
     @EventHandler
     public void onTeleport(PlayerTeleportEvent e) {
         Player player = e.getPlayer();
@@ -139,7 +139,7 @@ public class QuadCrate implements Listener {
             player.sendMessage(Messages.NO_TELEPORTING.getMessage("%Player%", player.getName()));
         }
     }
-    
+
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
         Player player = e.getPlayer();
@@ -147,5 +147,5 @@ public class QuadCrate implements Listener {
             QuadCrateSession.getSession(player).endCrate();
         }
     }
-    
+
 }

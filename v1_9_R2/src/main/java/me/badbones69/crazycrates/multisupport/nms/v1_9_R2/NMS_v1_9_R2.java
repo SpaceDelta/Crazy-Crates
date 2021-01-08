@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NMS_v1_9_R2 implements NMSSupport {
-    
+
     @Override
     public void openChest(Block block, boolean open) {
         Material type = block.getType();
@@ -31,12 +31,12 @@ public class NMS_v1_9_R2 implements NMSSupport {
             }
         }
     }
-    
+
     @Override
     public void saveSchematic(Location[] locations, String owner, File file) {
-    
+
     }
-    
+
     //http://stackoverflow.com/questions/24101928/setting-block-data-from-schematic-in-bukkit
     @Override
     public void pasteSchematic(File f, Location loc) {
@@ -68,7 +68,7 @@ public class NMS_v1_9_R2 implements NMSSupport {
             e.printStackTrace();
         }
     }
-    
+
     @Override
     public List<Location> getLocations(File f, Location loc) {
         loc = loc.subtract(2, 1, 2);
@@ -94,7 +94,7 @@ public class NMS_v1_9_R2 implements NMSSupport {
         }
         return locations;
     }
-    
+
     @Override
     public List<Material> getQuadCrateBlacklistBlocks() {
         List<Material> blockList = new ArrayList<>();
@@ -104,10 +104,10 @@ public class NMS_v1_9_R2 implements NMSSupport {
         blockList.add(Material.WOOD_BUTTON);
         return blockList;
     }
-    
+
     @Override
     public ItemStack getItemInMainHand(Player player) {
         return player.getInventory().getItemInMainHand();
     }
-    
+
 }

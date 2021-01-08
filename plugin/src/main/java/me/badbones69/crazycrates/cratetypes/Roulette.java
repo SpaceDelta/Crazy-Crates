@@ -16,9 +16,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 
 public class Roulette implements Listener {
-    
+
     private static CrazyCrates cc = CrazyCrates.getInstance();
-    
+
     private static void setGlass(Inventory inv) {
         for (int i = 0; i < 27; i++) {
             if (i != 13) {
@@ -27,7 +27,7 @@ public class Roulette implements Listener {
             }
         }
     }
-    
+
     public static void openRoulette(Player player, Crate crate, KeyType keyType, boolean checkHand) {
         Inventory inv = Bukkit.createInventory(null, 27, Methods.sanitizeColor(crate.getFile().getString("Crate.CrateName")));
         setGlass(inv);
@@ -40,14 +40,14 @@ public class Roulette implements Listener {
         }
         startRoulette(player, inv, crate);
     }
-    
+
     private static void startRoulette(final Player player, final Inventory inv, final Crate crate) {
         cc.addCrateTask(player, new BukkitRunnable() {
             int time = 1;
             int even = 0;
             int full = 0;
             int open = 0;
-            
+
             @Override
             public void run() {
                 if (full <= 15) {
@@ -100,7 +100,7 @@ public class Roulette implements Listener {
             }
         }.runTaskTimer(cc.getPlugin(), 2, 2));
     }
-    
+
     private static ArrayList<Integer> slowSpin() {
         ArrayList<Integer> slow = new ArrayList<>();
         int full = 46;
@@ -114,5 +114,5 @@ public class Roulette implements Listener {
         }
         return slow;
     }
-    
+
 }

@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Wonder implements Listener {
-    
+
     private static CrazyCrates cc = CrazyCrates.getInstance();
-    
+
     public static void startWonder(final Player player, Crate crate, KeyType keyType, boolean checkHand) {
         if (!cc.takeKeys(1, player, crate, keyType, checkHand)) {
             Methods.failedToTakeKey(player, crate);
@@ -43,7 +43,7 @@ public class Wonder implements Listener {
             Random r = new Random();
             ArrayList<Integer> Slots = new ArrayList<>();
             Prize prize = null;
-            
+
             @Override
             public void run() {
                 if (timer >= 2 && fulltime <= 65) {
@@ -86,5 +86,5 @@ public class Wonder implements Listener {
             }
         }.runTaskTimer(cc.getPlugin(), 0, 2));
     }
-    
+
 }

@@ -13,15 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * Only use for this class is to check if for broken locations and to try and fix them when the server loads the world.
- *
  */
 public class BrokeLocationsControl implements Listener {
-    
+
     private CrazyCrates cc = CrazyCrates.getInstance();
     private FileManager fileManager = FileManager.getInstance();
-    
+
     @EventHandler
     public void onWorldLoad(WorldLoadEvent e) {
         if (!cc.getBrokeCrateLocations().isEmpty()) {
@@ -44,5 +42,5 @@ public class BrokeLocationsControl implements Listener {
             }
         }
     }
-    
+
 }

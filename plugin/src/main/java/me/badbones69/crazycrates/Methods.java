@@ -28,24 +28,24 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class Methods {
-    
+
     public static HashMap<Player, String> path = new HashMap<>();
     public static Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("CrazyCrates");
     private static CrazyCrates cc = CrazyCrates.getInstance();
     private static Random random = new Random();
-    
+
     public static String color(String msg) {
         return ChatColor.translateAlternateColorCodes('&', msg);
     }
-    
+
     public static String sanitizeColor(String msg) {
         return sanitizeFormat(color(msg));
     }
-    
+
     public static String removeColor(String msg) {
         return ChatColor.stripColor(msg);
     }
-    
+
     public static HashMap<ItemStack, String> getItems(Player player) {
         HashMap<ItemStack, String> items = new HashMap<>();
         FileConfiguration file = cc.getOpeningCrate(player).getFile();
@@ -69,7 +69,7 @@ public class Methods {
         }
         return items;
     }
-    
+
     public static void fireWork(Location loc) {
         final Firework fw = loc.getWorld().spawn(loc, Firework.class);
         FireworkMeta fm = fw.getFireworkMeta();
@@ -77,9 +77,9 @@ public class Methods {
         fm.setPower(0);
         fw.setFireworkMeta(fm);
         FireworkDamageEvent.addFirework(fw);
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, fw :: detonate, 2);
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, fw::detonate, 2);
     }
-    
+
     public static boolean isInt(String s) {
         try {
             Integer.parseInt(s);
@@ -88,11 +88,11 @@ public class Methods {
         }
         return true;
     }
-    
+
     public static Player getPlayer(String name) {
         return Bukkit.getPlayerExact(name);
     }
-    
+
     public static boolean isOnline(String name, CommandSender sender) {
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
             if (player.getName().equalsIgnoreCase(name)) {
@@ -102,7 +102,7 @@ public class Methods {
         sender.sendMessage(Messages.NOT_ONLINE.getMessage("%Player%", name));
         return false;
     }
-    
+
     public static void removeItem(ItemStack item, Player player) {
         try {
             if (item.getAmount() <= 1) {
@@ -113,7 +113,7 @@ public class Methods {
         } catch (Exception e) {
         }
     }
-    
+
     public static boolean permCheck(CommandSender sender, String perm) {
         if (sender instanceof Player) {
             return permCheck((Player) sender, perm);
@@ -121,7 +121,7 @@ public class Methods {
             return true;
         }
     }
-    
+
     public static boolean permCheck(Player player, String perm) {
         if (player.hasPermission("crazycrates." + perm.toLowerCase()) || player.hasPermission("crazycrates.admin")) {
             return true;
@@ -130,27 +130,27 @@ public class Methods {
             return false;
         }
     }
-    
+
     public static String getPrefix() {
         return color(Files.CONFIG.getFile().getString("Settings.Prefix"));
     }
-    
+
     public static String getPrefix(String msg) {
         return color(Files.CONFIG.getFile().getString("Settings.Prefix") + msg);
     }
-    
+
     public static List<Location> getLocations(String shem, Location loc) {
         return cc.getNMSSupport().getLocations(new File(plugin.getDataFolder() + "/Schematics/" + shem), loc);
     }
-    
+
     public static boolean isInventoryFull(Player player) {
         return player.getInventory().firstEmpty() == -1;
     }
-    
+
     public static Integer randomNumber(int min, int max) {
         return min + random.nextInt(max - min);
     }
-    
+
     public static boolean isSimilar(Player player, Crate crate) {
         boolean check = isSimilar(cc.getNMSSupport().getItemInMainHand(player), crate);
         if (!check) {
@@ -160,13 +160,13 @@ public class Methods {
         }
         return check;
     }
-    
+
     public static boolean isSimilar(ItemStack itemStack, Crate crate) {
         return itemStack.isSimilar(crate.getKey()) || itemStack.isSimilar(crate.getKeyNoNBT()) ||
-        itemStack.isSimilar(crate.getAdminKey()) || stripNBT(itemStack).isSimilar(crate.getKeyNoNBT()) ||
-        isSimilarCustom(crate.getKeyNoNBT(), itemStack);
+                itemStack.isSimilar(crate.getAdminKey()) || stripNBT(itemStack).isSimilar(crate.getKeyNoNBT()) ||
+                isSimilarCustom(crate.getKeyNoNBT(), itemStack);
     }
-    
+
     private static boolean isSimilarCustom(ItemStack one, ItemStack two) {
         if (one != null && two != null) {
             if (one.getType() == two.getType()) {
@@ -207,7 +207,7 @@ public class Methods {
         }
         return false;
     }
-    
+
     private static ItemStack stripNBT(ItemStack item) {
         try {
             NBTItem nbtItem = new NBTItem(item.clone());
@@ -221,7 +221,7 @@ public class Methods {
             return item;
         }
     }
-    
+
     public static void hasUpdate() {
         try {
             HttpURLConnection c = (HttpURLConnection) new URL("http://www.spigotmc.org/api/general.php").openConnection();
@@ -236,7 +236,7 @@ public class Methods {
         } catch (Exception e) {
         }
     }
-    
+
     public static void hasUpdate(Player player) {
         try {
             HttpURLConnection c = (HttpURLConnection) new URL("http://www.spigotmc.org/api/general.php").openConnection();
@@ -251,11 +251,11 @@ public class Methods {
         } catch (Exception e) {
         }
     }
-    
+
     public static Set<String> getEnchantments() {
         return getEnchantmentList().keySet();
     }
-    
+
     public static Enchantment getEnchantment(String enchantmentName) {
         HashMap<String, String> enchantments = getEnchantmentList();
         enchantmentName = stripEnchantmentName(enchantmentName);
@@ -268,7 +268,7 @@ public class Methods {
                     }
                 }
                 if (stripEnchantmentName(enchantment.getName()).equalsIgnoreCase(enchantmentName) || (enchantments.get(enchantment.getName()) != null &&
-                stripEnchantmentName(enchantments.get(enchantment.getName())).equalsIgnoreCase(enchantmentName))) {
+                        stripEnchantmentName(enchantments.get(enchantment.getName())).equalsIgnoreCase(enchantmentName))) {
                     return enchantment;
                 }
             } catch (Exception ignore) {//If any null enchantments are found they may cause errors.
@@ -276,7 +276,7 @@ public class Methods {
         }
         return null;
     }
-    
+
     public static String getEnchantmentName(Enchantment enchantment) {
         HashMap<String, String> enchantments = getEnchantmentList();
         if (enchantments.get(enchantment.getName()) == null) {
@@ -284,11 +284,11 @@ public class Methods {
         }
         return enchantments.get(enchantment.getName());
     }
-    
+
     private static String stripEnchantmentName(String enchantmentName) {
         return enchantmentName != null ? enchantmentName.replace("-", "").replace("_", "").replace(" ", "") : null;
     }
-    
+
     private static HashMap<String, String> getEnchantmentList() {
         HashMap<String, String> enchantments = new HashMap<>();
         enchantments.put("ARROW_DAMAGE", "Power");
@@ -327,33 +327,33 @@ public class Methods {
         enchantments.put("LOYALTY", "Loyalty");
         return enchantments;
     }
-    
+
     public static ItemBuilder getRandomPaneColor() {
         boolean newMaterial = cc.useNewMaterial();
         List<String> colors = Arrays.asList(
-        newMaterial ? "WHITE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:0",// 0
-        newMaterial ? "ORANGE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:1",// 1
-        newMaterial ? "MAGENTA_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:2",// 2
-        newMaterial ? "LIGHT_BLUE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:3",// 3
-        newMaterial ? "YELLOW_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:4",// 4
-        newMaterial ? "LIME_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:5",// 5
-        newMaterial ? "PINK_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:6",// 6
-        newMaterial ? "GRAY_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:7",// 7
-        //Skipped 8 due to it being basically invisible in a GUI.
-        newMaterial ? "CYAN_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:9",// 9
-        newMaterial ? "PURPLE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:10",// 10
-        newMaterial ? "BLUE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:11",// 11
-        newMaterial ? "BROWN_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:12",// 12
-        newMaterial ? "GREEN_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:13",// 13
-        newMaterial ? "RED_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:14",// 14
-        newMaterial ? "BLACK_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:15");// 15
+                newMaterial ? "WHITE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:0",// 0
+                newMaterial ? "ORANGE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:1",// 1
+                newMaterial ? "MAGENTA_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:2",// 2
+                newMaterial ? "LIGHT_BLUE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:3",// 3
+                newMaterial ? "YELLOW_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:4",// 4
+                newMaterial ? "LIME_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:5",// 5
+                newMaterial ? "PINK_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:6",// 6
+                newMaterial ? "GRAY_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:7",// 7
+                //Skipped 8 due to it being basically invisible in a GUI.
+                newMaterial ? "CYAN_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:9",// 9
+                newMaterial ? "PURPLE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:10",// 10
+                newMaterial ? "BLUE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:11",// 11
+                newMaterial ? "BROWN_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:12",// 12
+                newMaterial ? "GREEN_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:13",// 13
+                newMaterial ? "RED_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:14",// 14
+                newMaterial ? "BLACK_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:15");// 15
         return new ItemBuilder().setMaterial(colors.get(random.nextInt(colors.size())));
     }
-    
+
     public static void failedToTakeKey(Player player, Crate crate) {
         failedToTakeKey(player, crate, null);
     }
-    
+
     public static void failedToTakeKey(Player player, Crate crate, Exception e) {
         System.out.println("[CrazyCrates] An error has occurred while trying to take a physical key from a player");
         System.out.println("Player: " + player.getName());
@@ -363,9 +363,9 @@ public class Methods {
             e.printStackTrace();
         }
     }
-    
+
     public static String sanitizeFormat(String string) {
         return TextComponent.toLegacyText(TextComponent.fromLegacyText(string));
     }
-    
+
 }

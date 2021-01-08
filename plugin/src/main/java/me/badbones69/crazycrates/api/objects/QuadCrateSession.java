@@ -21,12 +21,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.*;
 
 public class QuadCrateSession {
-    
+
     private static CrazyCrates cc = CrazyCrates.getInstance();
     private static NMSSupport nms = cc.getNMSSupport();
     private static List<QuadCrateSession> crateSessions = new ArrayList<>();
     private static List<Material> blacklistBlocks = nms.getQuadCrateBlacklistBlocks();
-    
+
     private QuadCrateSession instance;
     private Crate crate;
     private Player player;
@@ -44,7 +44,7 @@ public class QuadCrateSession {
     private List<BukkitRunnable> ongoingTasks = new ArrayList<>();
     private HashMap<Location, BlockState> oldBlocks = new HashMap<>();
     private HashMap<Location, BlockState> oldChestBlocks = new HashMap<>();
-    
+
     public QuadCrateSession(Player player, Crate crate, KeyType keyType, Location spawnLocation, Location lastLocation, boolean checkHand) {
         this.instance = this;
         this.crate = crate;
@@ -58,16 +58,16 @@ public class QuadCrateSession {
         this.particleColor = getColors().get(new Random().nextInt(getColors().size()));
         crateSessions.add(instance);
     }
-    
+
     public static void endAllCrates() {
         crateSessions.forEach(session -> session.endCrateForce(false));
         crateSessions.clear();
     }
-    
+
     public static List<QuadCrateSession> getCrateSessions() {
         return crateSessions;
     }
-    
+
     public static Boolean inSession(Player player) {
         for (QuadCrateSession session : crateSessions) {
             if (session.getPlayer() == player) {
@@ -76,7 +76,7 @@ public class QuadCrateSession {
         }
         return false;
     }
-    
+
     public static QuadCrateSession getSession(Player player) {
         for (QuadCrateSession session : crateSessions) {
             if (session.getPlayer() == player) {
@@ -85,7 +85,7 @@ public class QuadCrateSession {
         }
         return null;
     }
-    
+
     /**
      * @return True if the crate started successfully and false if it could not start.
      */
@@ -161,7 +161,7 @@ public class QuadCrateSession {
             Location particleLocation = chestLocations.get(crateNumber).clone().add(.5, 3, .5);
             List<Location> spiralLocationsClockwise = getSpiralLocationsClockwise(particleLocation);
             List<Location> spiralLocationsCounterClockwise = getSpiralLocationsCounterClockwise(particleLocation);
-            
+
             @Override
             public void run() {
                 if (tickTillSpawn < 60) {
@@ -194,14 +194,14 @@ public class QuadCrateSession {
         }.runTaskLater(cc.getPlugin(), cc.getQuadCrateTimer()));
         return true;
     }
-    
+
     public void endCrate() {
         oldBlocks.keySet().forEach(location -> oldBlocks.get(location).update(true, false));
         new BukkitRunnable() {
             @Override
             public void run() {
                 chestLocations.forEach(location -> oldChestBlocks.get(location).update(true, false));
-                displayedRewards.forEach(Entity :: remove);
+                displayedRewards.forEach(Entity::remove);
                 player.teleport(lastLocation);
                 if (cc.getHologramController() != null) {
                     cc.getHologramController().createHologram(spawnLocation.getBlock(), crate);
@@ -212,55 +212,55 @@ public class QuadCrateSession {
             }
         }.runTaskLater(cc.getPlugin(), 3 * 20);
     }
-    
+
     public void endCrateForce(boolean removeFromSessions) {
         oldBlocks.keySet().forEach(location -> oldBlocks.get(location).update(true, false));
         chestLocations.forEach(location -> oldChestBlocks.get(location).update(true, false));
-        displayedRewards.forEach(Entity :: remove);
+        displayedRewards.forEach(Entity::remove);
         player.teleport(lastLocation);
         cc.removePlayerFromOpeningList(player);
         if (removeFromSessions) {
             crateSessions.remove(instance);
         }
     }
-    
+
     public Crate getCrate() {
         return crate;
     }
-    
+
     public Player getPlayer() {
         return player;
     }
-    
+
     public QuadCrateParticles getParticle() {
         return particle;
     }
-    
+
     public Color getParticleColor() {
         return particleColor;
     }
-    
+
     public Location getLastLocation() {
         return lastLocation;
     }
-    
+
     public List<Location> getChestLocations() {
         return chestLocations;
     }
-    
+
     public HashMap<Location, Boolean> getChestsOpened() {
         return chestsOpened;
     }
-    
+
     public Boolean hasChestBeenOpened(Location location) {
         //If null it returns true just in case to make sure random blocks can't spawn prizes
         return chestsOpened.get(location) == null ? true : chestsOpened.get(location);
     }
-    
+
     public void setChestOpened(Location location, Boolean toggle) {
         chestsOpened.put(location, toggle);
     }
-    
+
     public Boolean allChestsOpened() {
         for (Location location : chestsOpened.keySet()) {
             if (!chestsOpened.get(location)) {
@@ -269,31 +269,31 @@ public class QuadCrateSession {
         }
         return true;
     }
-    
+
     public List<Entity> getDisplayedRewards() {
         return displayedRewards;
     }
-    
+
     public List<BukkitRunnable> getOngoingTasks() {
         return ongoingTasks;
     }
-    
+
     public CrateSchematic getCrateSchematic() {
         return crateSchematic;
     }
-    
+
     public List<Location> getSchematicLocations() {
         return schematicLocations;
     }
-    
+
     public HashMap<Location, BlockState> getOldBlocks() {
         return oldBlocks;
     }
-    
+
     public HashMap<Location, BlockState> getOldChestBlocks() {
         return oldChestBlocks;
     }
-    
+
     private ArrayList<Location> getSpiralLocationsClockwise(Location center) {
         World world = center.getWorld();
         double downwardsDistnance = .05;
@@ -323,7 +323,7 @@ public class QuadCrateSession {
         }
         return locations;
     }
-    
+
     private ArrayList<Location> getSpiralLocationsCounterClockwise(Location center) {
         World world = center.getWorld();
         double downwardsDistnance = .05;
@@ -353,15 +353,15 @@ public class QuadCrateSession {
         }
         return locations;
     }
-    
+
     private List<Color> getColors() {
         return Arrays.asList(
-        Color.AQUA, Color.BLACK, Color.BLUE, Color.FUCHSIA, Color.GRAY,
-        Color.GREEN, Color.LIME, Color.MAROON, Color.NAVY, Color.OLIVE,
-        Color.ORANGE, Color.PURPLE, Color.RED, Color.SILVER, Color.TEAL,
-        Color.WHITE, Color.YELLOW);
+                Color.AQUA, Color.BLACK, Color.BLUE, Color.FUCHSIA, Color.GRAY,
+                Color.GREEN, Color.LIME, Color.MAROON, Color.NAVY, Color.OLIVE,
+                Color.ORANGE, Color.PURPLE, Color.RED, Color.SILVER, Color.TEAL,
+                Color.WHITE, Color.YELLOW);
     }
-    
+
     private void spawnParticles(QuadCrateParticles quadCrateParticle, Color particleColor, Location location1, Location location2) {
         if (Version.getCurrentVersion().isNewer(Version.v1_8_R3)) {
             Particle particle;
@@ -409,7 +409,7 @@ public class QuadCrateSession {
             particleEffect.display(0, 0, 0, 0, 1, location2, 100);
         }
     }
-    
+
     private void rotateChest(Block chest, Integer direction) {
         BlockFace blockFace;
         switch (direction) {
@@ -433,5 +433,5 @@ public class QuadCrateSession {
         state.setData(new Chest(blockFace));
         state.update();
     }
-    
+
 }
