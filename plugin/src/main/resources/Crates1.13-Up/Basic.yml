@@ -48,6 +48,16 @@ Crate:
     #Makes the key look enchanted.
     Glowing: true
     #Settings for the holograms.
+  # Optional voucher, remove to not include
+  RedeemVoucher:
+    Name: '&7&lBasic Crate &b&lRedeemable Voucher'
+    Lore:
+      - '&7'
+      - '&7Right Click to redeem'
+    Item: 'TRIPWIRE_HOOK'
+    #Makes the key look enchanted.
+    Glowing: true
+    #Settings for the holograms.
   Hologram:
     #Toggle on and off the holograms for the crates.
     Toggle: true

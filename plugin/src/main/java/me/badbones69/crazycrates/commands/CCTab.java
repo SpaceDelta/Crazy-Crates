@@ -37,6 +37,7 @@ public class CCTab implements TabCompleter {
             if (hasPermission(sender, "schematic")) completions.add("set1");
             if (hasPermission(sender, "schematic")) completions.add("set2");
             if (hasPermission(sender, "schematic")) completions.add("save");
+            if (hasPermission(sender, "voucher")) completions.add("voucher");
             return StringUtil.copyPartialMatches(args[0], completions, new ArrayList<>());
         } else if (args.length == 2) {// /cc arg0
             switch (args[0].toLowerCase()) {
@@ -61,6 +62,9 @@ public class CCTab implements TabCompleter {
                     completions.add("virtual");
                     completions.add("v");
                     break;
+                case "voucher":
+                    completions.add("give");
+                    break;
                 case "save":
                     completions.add("<Schematic Name>");
                     break;
@@ -77,6 +81,7 @@ public class CCTab implements TabCompleter {
                 case "open":
                 case "forceopen":
                 case "transfer":
+                case "voucher":
                     Bukkit.getOnlinePlayers().forEach(player -> completions.add(player.getName()));
                     break;
                 case "give":
@@ -94,6 +99,9 @@ public class CCTab implements TabCompleter {
                 case "take":
                 case "transfer":
                     for (int i = 1; i <= 100; i++) completions.add(i + "");
+                    break;
+                case "voucher":
+                    cc.getCrates().forEach(crate -> completions.add(crate.getName()));
                     break;
             }
             return StringUtil.copyPartialMatches(args[3], completions, new ArrayList<>());

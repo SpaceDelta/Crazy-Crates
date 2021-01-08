@@ -9,6 +9,7 @@ import me.badbones69.crazycrates.commands.CCTab;
 import me.badbones69.crazycrates.commands.KeyCommand;
 import me.badbones69.crazycrates.commands.KeyTab;
 import me.badbones69.crazycrates.controllers.*;
+import me.badbones69.crazycrates.controllers.ui.UICrateMenu;
 import me.badbones69.crazycrates.cratetypes.*;
 import me.badbones69.crazycrates.multisupport.*;
 import org.bukkit.Bukkit;
@@ -74,9 +75,21 @@ public class Main extends JavaPlugin implements Listener {
         updateChecker = !Files.CONFIG.getFile().contains("Settings.Update-Checker") || Files.CONFIG.getFile().getBoolean("Settings.Update-Checker");
         //Messages.addMissingMessages(); #Does work but is disabled for now.
         cc.loadCrates();
+
+        // load events
+
+        // Start SpaceDelta
+        UICrateMenu crateMenu = new UICrateMenu(this);
+        cc.setCrateMenu(crateMenu);
+
+        VoucherController voucherController = new VoucherController(cc);
+        cc.setVoucherController(voucherController);
+        // End SpaceDelta
+
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(this, this);
-        pm.registerEvents(new GUIMenu(), this);
+        pm.registerEvents(crateMenu, this);
+        pm.registerEvents(voucherController, this);
         pm.registerEvents(new Preview(), this);
         pm.registerEvents(new QuadCrate(), this);
         pm.registerEvents(new War(), this);
@@ -121,24 +134,6 @@ public class Main extends JavaPlugin implements Listener {
                 cc.getHologramController().removeAllHolograms();
             }
         }
-    }
-
-    @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
-        Player player = e.getPlayer();
-        cc.setNewPlayerKeys(player);
-        cc.loadOfflinePlayersKeys(player);
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (player.getName().equals("BadBones69")) {
-                    player.sendMessage(Methods.getPrefix() + Methods.color("&7This server is running your Crazy Crates Plugin. " + "&7It is running version &av" + Methods.plugin.getDescription().getVersion() + "&7."));
-                }
-                if (player.isOp() && updateChecker) {
-                    Methods.hasUpdate(player);
-                }
-            }
-        }.runTaskLaterAsynchronously(this, 40);
     }
 
 }

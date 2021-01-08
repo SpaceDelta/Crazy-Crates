@@ -4,6 +4,7 @@ import me.badbones69.crazycrates.api.CrazyCrates;
 import me.badbones69.crazycrates.api.FileManager.Files;
 import me.badbones69.crazycrates.api.objects.Crate;
 import me.badbones69.crazycrates.api.objects.ItemBuilder;
+import me.badbones69.crazycrates.controllers.ui.UICrateMenu;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -123,7 +124,7 @@ public class Preview implements Listener {
                 if (e.getCurrentItem() != null) {
                     if (e.getRawSlot() == crate.getAbsoluteItemPosition(4)) {// Clicked the menu button.
                         if (playerInMenu(player)) {
-                            GUIMenu.openGUI(player);
+                            cc.getCrateMenu().open(player);
                         }
                     } else if (e.getRawSlot() == crate.getAbsoluteItemPosition(5)) {// Clicked the next button.
                         if (getPage(player) < crate.getMaxPage()) {

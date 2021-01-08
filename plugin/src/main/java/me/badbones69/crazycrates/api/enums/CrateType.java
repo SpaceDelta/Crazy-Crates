@@ -5,6 +5,9 @@ public enum CrateType {
     MENU("Menu"),
     COSMIC("Cosmic"),
     CRATE_ON_THE_GO("CrateOnTheGo"),
+    // Start SpaceDelta
+    VIRTUAL_ON_THE_GO("VirtualOnTheGo"),
+    // End SpaceDelta
     CSGO("CSGO"),
     FIRE_CRACKER("FireCracker"),
     QUAD_CRATE("QuadCrate"),
@@ -14,9 +17,9 @@ public enum CrateType {
     WONDER("Wonder"),
     WAR("War");
 
-    private String name;
+    private final String name;
 
-    private CrateType(String name) {
+    CrateType(String name) {
         this.name = name;
     }
 

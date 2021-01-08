@@ -9,6 +9,7 @@ import me.badbones69.crazycrates.api.enums.Messages;
 import me.badbones69.crazycrates.api.events.PhysicalCrateKeyCheckEvent;
 import me.badbones69.crazycrates.api.objects.Crate;
 import me.badbones69.crazycrates.api.objects.CrateLocation;
+import me.badbones69.crazycrates.controllers.ui.UICrateMenu;
 import me.badbones69.crazycrates.cratetypes.QuickCrate;
 import me.badbones69.crazycrates.multisupport.Version;
 import org.bukkit.Bukkit;
@@ -119,7 +120,7 @@ public class CrateControl implements Listener { //Crate Control
                 if (crate.getCrateType() == CrateType.MENU) {
                     //This is to stop players in QuadCrate to not be able to try and open a crate set to menu.
                     if (!cc.isInOpeningList(player)) {
-                        GUIMenu.openGUI(player);
+                        cc.getCrateMenu().open(player);
                     }
                     return;
                 }

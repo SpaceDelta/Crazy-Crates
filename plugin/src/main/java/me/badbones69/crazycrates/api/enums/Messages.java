@@ -22,6 +22,9 @@ public enum Messages {
     NO_PERMISSION("No-Permission", "&cYou do not have permission to use that command!"),
     CRATE_ALREADY_OPENED("Crate-Already-Opened", "&cYou are already opening a crate."),
     CANT_BE_A_VIRTUAL_CRATE("Cant-Be-A-Virtual-Crate", "&cThat crate type cannot be used as a virtual crate."),
+    // Start SpaceDelta
+    CANT_BE_A_PHYSICAL_CRATE("Cant-Be-A-Physical-Crate", "&cThat crate type cannot be used as a physical crate."),
+    // End SpaceDelta
     INVENTORY_FULL("Inventory-Full", "&cYour inventory is full, please make room before opening a crate."),
     TO_CLOSE_TO_ANOTHER_PLAYER("To-Close-To-Another-Player", "&cYou are too close to a player that is opening their Crate."),
     NEEDS_MORE_ROOM("Needs-More-Room", "&cThere is not enough space to open that here."),
@@ -36,6 +39,10 @@ public enum Messages {
     GIVEN_OFFLINE_PLAYER_KEYS("Given-Offline-Player-Keys", "&7You have given &6%amount% &7key(s) to the offline player &6%player%&7."),
     TAKE_A_PLAYER_KEYS("Take-A-Player-Keys", "&7You have taken &6%amount% &7key(s) from &6%player%&7."),
     TAKE_OFFLINE_PLAYER_KEYS("Take-Offline-Player-Keys", "&7You have taken &6%amount% &7key(s) from the offline player &6%player%&7."),
+    // Start SpaceDelta
+    RECEIVE_VOUCHER("Player-Receive-Voucher", "&aReceived a %amount% redeemable voucher(s) for %crate%."),
+    PLAYER_REDEEM_VOUCHER("Player-Redeem-Voucher", "&aRedeemed a voucher for virtual keys of %crate%."),
+    // End SpaceDelta
     OPENED_A_CRATE("Opened-A-Crate", "&7You have just opened the &6%crate% &7crate for &6%player%&7."),
     INTERNAL_ERROR("Internal-Error", "&cAn internal error has occurred. Please check the console for the full error."),
     NO_ITEM_IN_HAND("No-Item-In-Hand", "&cYou need to have an item in your hand to add it to the crate."),
@@ -73,6 +80,7 @@ public enum Messages {
                     "&6/cc give <physical/virtual> <crate> [amount] [player] &7- Give a player keys for a Chest.",
                     "&6/cc giveall <physical/virtual> <crate> [amount] &7- Gives all online players keys for a Chest.",
                     "&6/cc take <physical/virtual> <crate> [amount] [player] &7- Allows you to take keys from a player.",
+                    "&6/cc voucher give <player> <crate> [amount] &7- Give a redeemable voucher for a virtual key",
                     "&6/cc set <crate> &7- Set a block you are looking at as a crate.",
                     "&6/cc set Menu &7- Set the block you are looking at to open the /cc GUI.",
                     "&6/cc reload &7- Reloads the Config and Data Files.",

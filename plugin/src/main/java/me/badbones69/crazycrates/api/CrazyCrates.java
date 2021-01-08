@@ -12,7 +12,8 @@ import me.badbones69.crazycrates.api.events.PlayerReceiveKeyEvent.KeyReciveReaso
 import me.badbones69.crazycrates.api.interfaces.HologramController;
 import me.badbones69.crazycrates.api.objects.*;
 import me.badbones69.crazycrates.controllers.CrateControl;
-import me.badbones69.crazycrates.controllers.GUIMenu;
+import me.badbones69.crazycrates.controllers.VoucherController;
+import me.badbones69.crazycrates.controllers.ui.UICrateMenu;
 import me.badbones69.crazycrates.controllers.Preview;
 import me.badbones69.crazycrates.cratetypes.*;
 import me.badbones69.crazycrates.multisupport.HologramsSupport;
@@ -150,6 +151,11 @@ public class CrazyCrates {
     public static FileManager getFileManager() {
         return fileManager;
     }
+
+    // Start SpaceDelta
+    private UICrateMenu crateMenu;
+    private VoucherController voucherController;
+    // End SpaceDelta
 
     /**
      * Loads all the information the plugin needs to run.
@@ -431,6 +437,7 @@ public class CrazyCrates {
                 return;
             }
         }
+
         addPlayerToOpeningList(player, crate);
         boolean broadcast = crate.getFile() != null && crate.getFile().getBoolean("Crate.OpeningBroadCast");
         if (broadcast && crate.getCrateType() != CrateType.QUAD_CRATE) {
@@ -439,12 +446,13 @@ public class CrazyCrates {
                     Bukkit.broadcastMessage(Methods.color(crate.getFile().getString("Crate.BroadCast").replaceAll("%Prefix%", Methods.getPrefix()).replaceAll("%prefix%", Methods.getPrefix()).replaceAll("%Player%", player.getName()).replaceAll("%player%", player.getName())));
                 }
             }
+
             broadcast = false;
         }
 
         switch (crate.getCrateType()) {
             case MENU:
-                GUIMenu.openGUI(player);
+                crateMenu.open(player);
                 break;
             case COSMIC:
                 Cosmic.openCosmic(player, crate, keyType, checkHand);
@@ -520,6 +528,20 @@ public class CrazyCrates {
                     }
                 }
                 break;
+            // Start SpaceDelta
+            case VIRTUAL_ON_THE_GO:
+                if (!virtualCrate) {
+                    player.sendMessage(Messages.CANT_BE_A_PHYSICAL_CRATE.getMessage());
+                    removePlayerFromOpeningList(player);
+                    return;
+                }
+
+                if (takeKeys(1, player, crate, keyType, false)) {
+                    CrateVirtualOnTheGo.issueReward(crate, player);
+                } else
+                    Methods.failedToTakeKey(player, crate);
+                break;
+                // End SpaceDelta
         }
         if (broadcast) {
             if (!crate.getFile().getString("Crate.BroadCast").isEmpty()) {
@@ -1448,6 +1470,25 @@ public class CrazyCrates {
         return new ItemBuilder().setMaterial(id).setName(name).setLore(lore).setGlowing(glowing).build();
     }
 
+    // Start SpaceDelta
+    public ItemStack getVoucher(FileConfiguration file) {
+        if (!file.isConfigurationSection("Crate.RedeemVoucher"))
+            return null;
+
+        String name = file.getString("Crate.RedeemVoucher.Name");
+        List<String> lore = file.getStringList("Crate.RedeemVoucher.Lore");
+        String id = file.getString("Crate.RedeemVoucher.Item");
+        boolean glowing = file.getBoolean("Crate.RedeemVoucher.Glowing");
+
+        return new ItemBuilder()
+                .setMaterial(id)
+                .setName(name)
+                .setLore(lore)
+                .setGlowing(glowing)
+                .build();
+    }
+    // End SpaceDelta
+
     private ItemBuilder getDisplayItem(FileConfiguration file, String prize) {
         String path = "Crate.Prizes." + prize + ".";
         ItemBuilder itemBuilder = new ItemBuilder();
@@ -1490,4 +1531,25 @@ public class CrazyCrates {
         }
     }
 
+    // Start SpaceDelta
+
+    public UICrateMenu getCrateMenu() {
+        return crateMenu;
+    }
+
+    public void setCrateMenu(UICrateMenu crateMenu) {
+        this.crateMenu = crateMenu;
+    }
+
+    public VoucherController getVoucherController() {
+        return voucherController;
+    }
+
+    public void setVoucherController(VoucherController voucherController) {
+        this.voucherController = voucherController;
+    }
+
+    // End SpaceDelta
+
 }
+
