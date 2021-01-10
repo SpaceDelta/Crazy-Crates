@@ -4,6 +4,9 @@ import me.badbones69.crazycrates.Methods;
 import me.badbones69.crazycrates.api.CrazyCrates;
 import me.badbones69.crazycrates.api.enums.Messages;
 import me.badbones69.crazycrates.api.objects.Crate;
+import me.badbones69.crazycrates.controllers.ui.UIVoucherConverter;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,15 +24,17 @@ public class KeyCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String commandLable, String[] args) {
         // /key [player]
         // /key redeem <crate> [amount] << Will be added later.
+
+        if (!Methods.permCheck(sender, "access")) {
+            return true;
+        }
+
         if (args.length == 0) {
-            if (sender instanceof Player) {
-                if (!Methods.permCheck(sender, "access")) {
-                    return true;
-                }
-            } else {
+            if (!(sender instanceof Player)) {
                 sender.sendMessage(Messages.MUST_BE_A_PLAYER.getMessage());
                 return true;
             }
+
             Player player = (Player) sender;
             List<String> message = new ArrayList<>();
             message.add(Messages.PERSONAL_HEADER.getMessageNoPrefix());
@@ -52,6 +57,28 @@ public class KeyCommand implements CommandExecutor {
             }
             return true;
         } else {
+            // key convert [player]
+            if (args[0].equalsIgnoreCase("convert")) {
+
+                Player target = null;
+                if (args.length > 1 && Methods.permCheck(sender, "admin")) {
+                    target = Bukkit.getPlayer(args[1]);
+                    if (target == null) {
+                        sender.sendMessage(ChatColor.RED + "No such player " + args[1]);
+                        return true;
+                    }
+                }
+
+                if (target == null && !(sender instanceof Player)) {
+                    sender.sendMessage("/key convert <player>");
+                    return true;
+                } else if (target == null)
+                    target = (Player) sender;
+
+                new UIVoucherConverter(target);
+                return true;
+            }
+
             if (sender instanceof Player) {
                 if (!Methods.permCheck(sender, "admin")) {
                     return true;
@@ -78,6 +105,7 @@ public class KeyCommand implements CommandExecutor {
                 sender.sendMessage(Messages.OTHER_PLAYER_NO_VIRTUAL_KEYS.getMessage("%Player%", player));
             }
         }
+
         return true;
     }
 

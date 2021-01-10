@@ -4,10 +4,7 @@ import me.badbones69.crazycrates.api.CrazyCrates;
 import me.badbones69.crazycrates.api.FileManager;
 import me.badbones69.crazycrates.api.FileManager.Files;
 import me.badbones69.crazycrates.api.objects.QuadCrateSession;
-import me.badbones69.crazycrates.commands.CCCommand;
-import me.badbones69.crazycrates.commands.CCTab;
-import me.badbones69.crazycrates.commands.KeyCommand;
-import me.badbones69.crazycrates.commands.KeyTab;
+import me.badbones69.crazycrates.commands.*;
 import me.badbones69.crazycrates.controllers.*;
 import me.badbones69.crazycrates.controllers.ui.UICrateMenu;
 import me.badbones69.crazycrates.cratetypes.*;
@@ -123,6 +120,7 @@ public class Main extends JavaPlugin implements Listener {
         getCommand("key").setTabCompleter(new KeyTab());
         getCommand("crazycrates").setExecutor(new CCCommand());
         getCommand("crazycrates").setTabCompleter(new CCTab());
+        getCommand("convertkey").setExecutor(new CommandConvertKey());
     }
 
     @Override

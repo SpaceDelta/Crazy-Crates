@@ -357,7 +357,7 @@ public class CCCommand implements CommandExecutor {
                             }
 
                         } else {
-                            placeholders.put("%Player%", args[4]);
+                            placeholders.put("%Player%", args.length > 4 ? args[4] : sender.getName());
 
                             PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(target, giveCrate, KeyReciveReason.GIVE_COMMAND);
                             Bukkit.getPluginManager().callEvent(event);

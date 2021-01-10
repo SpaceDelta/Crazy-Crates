@@ -14,3 +14,6 @@ commands:
   key:
     description: Views the amount of keys you/others have.
     aliases: [keys]
+  convertkey:
+    description: Converts physical key to virtual'
+    aliases: [ keyconvert ]
