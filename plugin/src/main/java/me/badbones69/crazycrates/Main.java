@@ -9,24 +9,27 @@ import me.badbones69.crazycrates.controllers.*;
 import me.badbones69.crazycrates.controllers.ui.UICrateMenu;
 import me.badbones69.crazycrates.cratetypes.*;
 import me.badbones69.crazycrates.multisupport.*;
+import net.spacedelta.lib.plugin.BukkitPlugin;
+import net.spacedelta.lib.plugin.annotation.Instance;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
-public class Main extends JavaPlugin implements Listener {
+public class Main extends BukkitPlugin implements Listener { // SpaceDelta
+
+    @Instance
+    public static Main INSTANCE;
 
     private final CrazyCrates cc = CrazyCrates.getInstance();
     private final FileManager fileManager = FileManager.getInstance();
     private boolean updateChecker = false;
     private boolean isEnabled = true;// If the server is supported
 
+    private CratesNetworker cratesNetworker; // SpaceDelta dont even care
+
     @Override
-    public void onEnable() {
+    public void enable() { // SpaceDelta
         if (Version.getCurrentVersion().isOlder(Version.v1_8_R3)) {// Disables plugin on unsupported versions
             isEnabled = false;
             System.out.println("============= Crazy Crates =============");
@@ -81,6 +84,9 @@ public class Main extends JavaPlugin implements Listener {
 
         VoucherController voucherController = new VoucherController(cc);
         cc.setVoucherController(voucherController);
+
+        cratesNetworker = new CratesNetworker(this);
+
         // End SpaceDelta
 
         PluginManager pm = Bukkit.getPluginManager();
@@ -124,7 +130,7 @@ public class Main extends JavaPlugin implements Listener {
     }
 
     @Override
-    public void onDisable() {
+    public void disable() { // SpaceDelta
         if (isEnabled) {
             QuadCrateSession.endAllCrates();
             QuickCrate.removeAllRewards();

@@ -1,6 +1,7 @@
 package me.badbones69.crazycrates.api;
 
 import de.tr7zw.changeme.nbtapi.NBTItem;
+import me.badbones69.crazycrates.Main;
 import me.badbones69.crazycrates.Methods;
 import me.badbones69.crazycrates.api.FileManager.Files;
 import me.badbones69.crazycrates.api.enums.BrokeLocation;
@@ -12,9 +13,9 @@ import me.badbones69.crazycrates.api.events.PlayerReceiveKeyEvent.KeyReciveReaso
 import me.badbones69.crazycrates.api.interfaces.HologramController;
 import me.badbones69.crazycrates.api.objects.*;
 import me.badbones69.crazycrates.controllers.CrateControl;
+import me.badbones69.crazycrates.controllers.Preview;
 import me.badbones69.crazycrates.controllers.VoucherController;
 import me.badbones69.crazycrates.controllers.ui.UICrateMenu;
-import me.badbones69.crazycrates.controllers.Preview;
 import me.badbones69.crazycrates.cratetypes.*;
 import me.badbones69.crazycrates.multisupport.HologramsSupport;
 import me.badbones69.crazycrates.multisupport.HolographicSupport;
@@ -22,6 +23,7 @@ import me.badbones69.crazycrates.multisupport.Support;
 import me.badbones69.crazycrates.multisupport.Version;
 import me.badbones69.crazycrates.multisupport.nms.NMSSupport;
 import me.badbones69.crazycrates.multisupport.nms.v1_15_R1.NMS_v1_15_R1;
+import me.badbones69.crazycrates.multisupport.nms.v1_16_R3.NMS_v1_16_R3;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -132,7 +134,9 @@ public class CrazyCrates {
     /**
      * The CrazyCrates plugin.
      */
-    private Plugin plugin;
+    // Start SpaceDelta
+    private UICrateMenu crateMenu;
+    private VoucherController voucherController;
 
     /**
      * Gets the instance of the CrazyCrates class.
@@ -151,10 +155,6 @@ public class CrazyCrates {
     public static FileManager getFileManager() {
         return fileManager;
     }
-
-    // Start SpaceDelta
-    private UICrateMenu crateMenu;
-    private VoucherController voucherController;
     // End SpaceDelta
 
     /**
@@ -174,6 +174,9 @@ public class CrazyCrates {
         switch (version) {
             case v1_15_R1:
                 nmsSupport = new NMS_v1_15_R1();
+                break;
+            case v1_16_R3:
+                nmsSupport = new NMS_v1_16_R3();
                 break;
             default:
                 throw new UnsupportedOperationException("not supported on " + version);
@@ -209,13 +212,9 @@ public class CrazyCrates {
             case v1_16_R2:
                 nmsSupport = new NMS_v1_16_R2();
                 break;
-            case v1_16_R3:
-                nmsSupport = new NMS_v1_16_R3();
-                break;
                  */
         }
         // End SpaceDelta
-        plugin = Bukkit.getPluginManager().getPlugin("CrazyCrates");
         quadCrateTimer = Files.CONFIG.getFile().getInt("Settings.QuadCrate.Timer") * 20;
         giveVirtualKeysWhenInventoryFull = Files.CONFIG.getFile().getBoolean("Settings.Give-Virtual-Keys-When-Inventory-Full");
         if (Support.HOLOGRAPHIC_DISPLAYS.isPluginLoaded()) {
@@ -347,18 +346,18 @@ public class CrazyCrates {
         }
         //Loading schematic files
         if (fileManager.isLogging()) System.out.println(fileManager.getPrefix() + "Searching for schematics to load.");
-        String[] schems = new File(plugin.getDataFolder() + "/Schematics/").list();
+        String[] schems = new File(Main.INSTANCE.getDataFolder() + "/Schematics/").list();
         boolean isNewer = Version.getCurrentVersion().isNewer(Version.v1_12_R1);
         for (String schematicName : schems) {
             if (isNewer) {
                 if (schematicName.endsWith(".nbt")) {
-                    crateSchematics.add(new CrateSchematic(schematicName.replace(".nbt", ""), new File(plugin.getDataFolder() + "/Schematics/" + schematicName)));
+                    crateSchematics.add(new CrateSchematic(schematicName.replace(".nbt", ""), new File(Main.INSTANCE.getDataFolder() + "/Schematics/" + schematicName)));
                     if (fileManager.isLogging())
                         System.out.println(fileManager.getPrefix() + schematicName + " was successfully found and loaded.");
                 }
             } else {
                 if (schematicName.endsWith(".schematic")) {
-                    crateSchematics.add(new CrateSchematic(schematicName.replace(".schematic", ""), new File(plugin.getDataFolder() + "/Schematics/" + schematicName)));
+                    crateSchematics.add(new CrateSchematic(schematicName.replace(".schematic", ""), new File(Main.INSTANCE.getDataFolder() + "/Schematics/" + schematicName)));
                     if (fileManager.isLogging())
                         System.out.println(fileManager.getPrefix() + schematicName + " was successfully found and loaded.");
                 }
@@ -541,7 +540,7 @@ public class CrazyCrates {
                 } else
                     Methods.failedToTakeKey(player, crate);
                 break;
-                // End SpaceDelta
+            // End SpaceDelta
         }
         if (broadcast) {
             if (!crate.getFile().getString("Crate.BroadCast").isEmpty()) {
@@ -1376,7 +1375,7 @@ public class CrazyCrates {
      * @return The CrazyCrates Plugin object.
      */
     public Plugin getPlugin() {
-        return plugin;
+        return Main.INSTANCE; // SpaceDelta
     }
 
     /**
@@ -1404,16 +1403,16 @@ public class CrazyCrates {
      */
     public void loadSchematics() {
         crateSchematics.clear();
-        String[] schems = new File(plugin.getDataFolder() + "/Schematics/").list();
+        String[] schems = new File(Main.INSTANCE.getDataFolder() + "/Schematics/").list();
         boolean isNewer = Version.getCurrentVersion().isNewer(Version.v1_12_R1);
         for (String schematicName : schems) {
             if (isNewer) {
                 if (schematicName.endsWith(".nbt")) {
-                    crateSchematics.add(new CrateSchematic(schematicName.replace(".nbt", ""), new File(plugin.getDataFolder() + "/Schematics/" + schematicName)));
+                    crateSchematics.add(new CrateSchematic(schematicName.replace(".nbt", ""), new File(Main.INSTANCE.getDataFolder() + "/Schematics/" + schematicName)));
                 }
             } else {
                 if (schematicName.endsWith(".schematic")) {
-                    crateSchematics.add(new CrateSchematic(schematicName.replace(".schematic", ""), new File(plugin.getDataFolder() + "/Schematics/" + schematicName)));
+                    crateSchematics.add(new CrateSchematic(schematicName.replace(".schematic", ""), new File(Main.INSTANCE.getDataFolder() + "/Schematics/" + schematicName)));
                 }
             }
         }

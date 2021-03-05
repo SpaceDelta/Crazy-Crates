@@ -2,8 +2,6 @@ package me.badbones69.crazycrates.controllers.ui;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.gson.internal.$Gson$Preconditions;
-import com.sun.prism.impl.paint.PaintUtil;
 import me.badbones69.crazycrates.Main;
 import me.badbones69.crazycrates.Methods;
 import me.badbones69.crazycrates.api.CrazyCrates;
@@ -28,7 +26,7 @@ import java.util.Map;
 public class UIVoucherConverter implements Listener {
 
     private static final int BUTTON_CANCEL = 48, BUTTON_CONFIRM = 50, BUTTON_INFO = 49;
-    private static final int[] BUTTON_BORDER = new int[] {45, 46, 47, 51, 52, 53};
+    private static final int[] BUTTON_BORDER = new int[]{45, 46, 47, 51, 52, 53};
 
     private final Player player;
     private Inventory inventory;
@@ -36,7 +34,7 @@ public class UIVoucherConverter implements Listener {
     private boolean selectedOption;
 
     public UIVoucherConverter(Player player) {
-        Bukkit.getServer().getPluginManager().registerEvents(this, Main.getPlugin(Main.class));
+        Bukkit.getServer().getPluginManager().registerEvents(this, Main.INSTANCE);
 
         this.player = player;
         inventory = Bukkit.getServer().createInventory(null, 54,

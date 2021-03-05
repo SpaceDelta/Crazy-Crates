@@ -33,6 +33,10 @@
             <id>codemc-nms</id>
             <url>https://repo.codemc.io/repository/nms/</url>
         </repository>
+        <repository>
+            <id>spacedelta-maven</id>
+            <url>http://142.202.222.242:8082/artifactory/everything/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -44,7 +48,29 @@
             <scope>compile</scope>
             <optional>true</optional>
         </dependency>
-        <!-- Start SpaceDelta
+        <dependency>
+            <groupId>me.badbones69</groupId>
+            <artifactId>crazycrates-v1_16_R3</artifactId>
+            <version>${project.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
+        <!-- Start SpaceDelta !-->
+        <dependency>
+            <groupId>net.spacedelta</groupId>
+            <artifactId>nebula</artifactId>
+            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>net.spacedelta</groupId>
+            <artifactId>library</artifactId>
+            <version>1.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--
         <dependency>
             <groupId>me.badbones69</groupId>
             <artifactId>crazycrates-v1_16_R3</artifactId>
@@ -133,7 +159,14 @@
             <scope>compile</scope>
             <optional>true</optional>
         </dependency>
+
                       End SpaceDelta !-->
+        <dependency>
+            <groupId>de.tr7zw</groupId>
+            <artifactId>item-nbt-api</artifactId>
+            <version>2.6.0</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>me.badbones69</groupId>
             <artifactId>crazycrates-api</artifactId>
@@ -143,18 +176,6 @@
             <optional>true</optional>
         </dependency>
 
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.16.4-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>de.tr7zw</groupId>
-            <artifactId>item-nbt-api</artifactId>
-            <version>2.6.0</version>
-            <scope>compile</scope>
-        </dependency>
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>

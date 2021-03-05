@@ -5,7 +5,7 @@
 
     <groupId>me.badbones69</groupId>
     <artifactId>crazycrates-parent</artifactId>
-    <version>1.10.2-SNAPSHOT</version>
+    <version>1.10.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>CrazyCrates</name>
 
@@ -21,13 +21,12 @@
         <module>v1_12_R1</module>
         <module>v1_13_R2</module>
         <module>v1_14_R1</module>
-        !-->
-        <module>v1_15_R1</module>
-        <!-- ^^
+
         <module>v1_16_R1</module>
         <module>v1_16_R2</module>
+                End SpaceDelta !-->
+        <module>v1_15_R1</module>
         <module>v1_16_R3</module>
-        End SpaceDelta !-->
     </modules>
 
     <repositories>

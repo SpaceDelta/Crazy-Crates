@@ -4,7 +4,6 @@ import me.badbones69.crazycrates.api.CrazyCrates;
 import me.badbones69.crazycrates.api.FileManager.Files;
 import me.badbones69.crazycrates.api.objects.Crate;
 import me.badbones69.crazycrates.api.objects.ItemBuilder;
-import me.badbones69.crazycrates.controllers.ui.UICrateMenu;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

@@ -381,6 +381,7 @@ public class Crate {
     }
 
     // Start SpaceDelta
+
     /**
      * @return if the animation should be skipped
      */

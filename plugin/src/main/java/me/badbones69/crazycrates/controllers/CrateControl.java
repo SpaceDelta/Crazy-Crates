@@ -9,7 +9,6 @@ import me.badbones69.crazycrates.api.enums.Messages;
 import me.badbones69.crazycrates.api.events.PhysicalCrateKeyCheckEvent;
 import me.badbones69.crazycrates.api.objects.Crate;
 import me.badbones69.crazycrates.api.objects.CrateLocation;
-import me.badbones69.crazycrates.controllers.ui.UICrateMenu;
 import me.badbones69.crazycrates.cratetypes.QuickCrate;
 import me.badbones69.crazycrates.multisupport.Version;
 import org.bukkit.Bukkit;

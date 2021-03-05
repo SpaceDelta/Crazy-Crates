@@ -10,10 +10,10 @@ description: Want some good quality crates without paying money for them? Then c
 commands:
   crazycrates:
     description: Opens the GUI.
-    aliases: [cc, ccrate, crazycrate, crate, crates]
+    aliases: [cc, ccrate, crazycrate, crate, crates, quirkycrates, quirkycrate ]
   key:
     description: Views the amount of keys you/others have.
     aliases: [keys]
   convertkey:
-    description: Converts physical key to virtual'
+    description: Converts physical key to virtual
     aliases: [ keyconvert ]

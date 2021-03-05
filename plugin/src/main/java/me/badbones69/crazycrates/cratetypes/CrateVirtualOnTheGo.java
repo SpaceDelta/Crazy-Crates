@@ -12,12 +12,12 @@ public class CrateVirtualOnTheGo {
 
     /**
      * Click and instant reward crate
-     *
+     * <p>
      * like {@link CrateOnTheGo} but for virtual instant reward click.
      *
-     * @author Ellie
-     * @param crate crate to give
+     * @param crate  crate to give
      * @param player player to issue prize to
+     * @author Ellie
      */
     public static void issueReward(Crate crate, Player player) {
         final Prize prize = crate.pickPrize(player);

@@ -1,6 +1,9 @@
 package me.badbones69.crazycrates.commands;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
+import me.badbones69.crazycrates.CratesNetworker;
+import me.badbones69.crazycrates.Main;
 import me.badbones69.crazycrates.Methods;
 import me.badbones69.crazycrates.api.CrazyCrates;
 import me.badbones69.crazycrates.api.FileManager;
@@ -14,11 +17,11 @@ import me.badbones69.crazycrates.api.objects.Crate;
 import me.badbones69.crazycrates.api.objects.CrateLocation;
 import me.badbones69.crazycrates.api.objects.Prize;
 import me.badbones69.crazycrates.controllers.CrateControl;
-import me.badbones69.crazycrates.controllers.ui.UICrateMenu;
 import me.badbones69.crazycrates.controllers.Preview;
 import me.badbones69.crazycrates.multisupport.Support;
 import me.badbones69.crazycrates.multisupport.Version;
 import me.badbones69.crazycrates.multisupport.converters.CratesPlusConverter;
+import net.spacedelta.lib.data.DataBuffer;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
@@ -322,9 +325,14 @@ public class CCCommand implements CommandExecutor {
                     amount = Integer.parseInt(args[3]);
                 }
 
+                boolean hereOnly = false;
+
                 if (!all) {
                     if (args.length >= 5) {
-                        target = Methods.getPlayer(args[4]);
+                        if (!(hereOnly = args[4].equals("-onlyhere"))) {
+                            target = Methods.getPlayer(args[4]);
+                        } else
+                            hereOnly = args.length >= 6 && args[5].equals("-onlyhere");
                     } else {
                         if (sender instanceof ConsoleCommandSender) {
                             sender.sendMessage(Messages.MUST_BE_A_PLAYER.getMessage());
@@ -333,6 +341,8 @@ public class CCCommand implements CommandExecutor {
                             target = (Player) sender;
                         }
                     }
+                } else {
+                    hereOnly = args[args.length - 1].equals("-onlyhere");
                 }
 
                 if (args.length >= 3) {
@@ -343,6 +353,15 @@ public class CCCommand implements CommandExecutor {
 
                         if (all) {
                             sender.sendMessage(Messages.GIVEN_EVERYONE_KEYS.getMessage(placeholders));
+
+                            if (!hereOnly) {
+                                Main.INSTANCE.getLibrary().getMessageBus()
+                                        .fire(Main.INSTANCE,
+                                                CratesNetworker.CHANNEL,
+                                                DataBuffer.create()
+                                                        .write(CratesNetworker.TAG_CMD, Joiner.on(" ").join(args)));
+                            }
+
                             for (Player player : Bukkit.getServer().getOnlinePlayers()) {
                                 PlayerReceiveKeyEvent event = new PlayerReceiveKeyEvent(player, giveCrate, KeyReciveReason.GIVE_ALL_COMMAND);
                                 Bukkit.getPluginManager().callEvent(event);
@@ -385,7 +404,7 @@ public class CCCommand implements CommandExecutor {
                             }
                             return true;
                         }
-                        sender.sendMessage(Messages.NOT_A_CRATE.getMessage("%Crate%", args[2]));
+                        // sender.sendMessage(Messages.NOT_A_CRATE.getMessage("%Crate%", args[2]));
                         return true;
                     }
                 }
