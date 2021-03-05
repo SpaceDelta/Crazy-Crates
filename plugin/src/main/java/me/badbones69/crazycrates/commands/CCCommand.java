@@ -355,11 +355,13 @@ public class CCCommand implements CommandExecutor {
                             sender.sendMessage(Messages.GIVEN_EVERYONE_KEYS.getMessage(placeholders));
 
                             if (!hereOnly) {
+                                Main.INSTANCE.info("Executing " + Joiner.on(" ").join(args) + " globally (waiting)");
                                 Main.INSTANCE.getLibrary().getMessageBus()
                                         .fire(Main.INSTANCE,
                                                 CratesNetworker.CHANNEL,
                                                 DataBuffer.create()
                                                         .write(CratesNetworker.TAG_CMD, Joiner.on(" ").join(args)));
+                                return true;
                             }
 
                             for (Player player : Bukkit.getServer().getOnlinePlayers()) {
