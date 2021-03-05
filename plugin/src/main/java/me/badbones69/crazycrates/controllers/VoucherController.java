@@ -14,6 +14,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Map;
+
 public class VoucherController implements Listener {
 
     private static final String NBT_TAG = "cc_voucher";
@@ -55,14 +57,20 @@ public class VoucherController implements Listener {
             return false;
         }
 
-        plugin.addKeys(1, player, crate, KeyType.VIRTUAL_KEY);
-        player.sendMessage(Messages.PLAYER_REDEEM_VOUCHER.getMessage("%crate%", crate.getName()));
+        int takeAmount = player.isSneaking()
+                ? mainHand.getAmount()
+                : 1;
+
+        plugin.addKeys(takeAmount, player, crate, KeyType.VIRTUAL_KEY);
+        player.sendMessage(Messages.PLAYER_REDEEM_VOUCHER.getMessage(
+                Map.of("%crate%", crate.getName(), "%amount%", String.valueOf(takeAmount))));
+
         player.playSound(player.getLocation(), plugin.getSound("ENTITY_PLAYER_LEVELUP", "LEVEL_UP"), 1, 1);
 
         if (takeItem) {
             // remove
-            if (mainHand.getAmount() > 1) {
-                mainHand.setAmount(mainHand.getAmount() - 1);
+            if (mainHand.getAmount() - takeAmount > 1) {
+                mainHand.setAmount(mainHand.getAmount() - takeAmount);
                 player.setItemInHand(mainHand);
             } else {
                 player.setItemInHand(null);
